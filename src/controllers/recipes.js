@@ -24,14 +24,13 @@ export const createRecipesController = async (req, res) => {
 
 export const getRecipeByIdController = async (req, res) => {
     const { recipeId } = req.params;
-    const recipe = await getRecipeById({ _id: recipeId });
+    const recipe = await getRecipeById(recipeId);
 
     res.status(200).json({
         "status": 200,
-        "message": `Successfully found contact with id ${recipeId}!`,
+        "message": `Successfully found recipe with id ${recipeId}!`,
         "data": recipe,
     });
-
 };
 
 export const deleteRecipeToFavoritesController = async (req, res) => {
