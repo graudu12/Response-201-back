@@ -1,46 +1,62 @@
-import { createRecipes, deleteRecipeFromFavorites, getAllRecipes, getRecipeById } from "../services/recipes.js";
+import {
+  createRecipes,
+  deleteRecipeFromFavorites,
+  getAllRecipes,
+  getRecipeById,
+} from '../services/recipes.js';
 
 export const getAllRecipesController = async (req, res) => {
-    const recipes = await getAllRecipes();
+  const recipes = await getAllRecipes();
 
-
-    res.status(200).json({
-        "status": 200,
-        "message": "Successfully found recipes!",
-        "data": recipes,
-    });
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found recipes!',
+    data: recipes,
+  });
 };
 
 export const createRecipesController = async (req, res) => {
+  const recipe = await createRecipes(req.body);
 
-    const recipe = await createRecipes(req.body);
-
-    res.status(200).json({
-        "status": 200,
-        "message": "Successfully create a recipe!",
-        "data": recipe,
-    });
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully create a recipe!',
+    data: recipe,
+  });
 };
 
 export const getRecipeByIdController = async (req, res) => {
-    const { recipeId } = req.params;
-    const recipe = await getRecipeById(recipeId);
+  const { recipeId } = req.params;
+  const recipe = await getRecipeById(recipeId);
 
-    res.status(200).json({
-        "status": 200,
-        "message": `Successfully found recipe with id ${recipeId}!`,
-        "data": recipe,
-    });
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found recipe with id ${recipeId}!`,
+    data: recipe,
+  });
 };
 
 export const deleteRecipeToFavoritesController = async (req, res) => {
-    const { recipeId } = req.params;
+  const { recipeId } = req.params;
 
-    const user = await deleteRecipeFromFavorites(req.user.id, recipeId);
+  const user = await deleteRecipeFromFavorites(req.user.id, recipeId);
 
-    res.status(200).json({
-        "status": 200,
-        "message": `The recipe has been successfully removed from favorites.`,
-        "data": user,
-    });
+  res.status(200).json({
+    status: 200,
+    message: `The recipe has been successfully removed from favorites.`,
+    data: user,
+  });
+};
+
+export const deleteOwnRecipeController = async (req, res) => {
+  const { recipeId } = req.params;
+  const userId = req.user._id;
+
+  const result = await deleteOwnRecipe(recipeId, userId);
+
+  res.status(200).json({
+    status: 200,
+    message: `The recipe has been successfully removed.`,
+    data: result,
+  });
 };
