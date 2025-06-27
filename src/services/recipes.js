@@ -17,7 +17,14 @@ export const createRecipes = async (payload) => {
     return recipe;
 };
 
-
+export const addRecipeToFavorites = async (userId, recipeId) => {
+  const user = await UserCollection.findByIdAndUpdate(
+    userId,
+    { $addToSet: { favoriteRecipes: recipeId } },
+    { new: true }
+  );
+  return user;
+};
 
 export const deleteRecipeFromFavorites = async (userId, recipeId) => {
     const recipe = await UserCollection.findByIdAndUpdate(userId, { $pull: { favoriteRecipes: recipeId } }, { new: true });
