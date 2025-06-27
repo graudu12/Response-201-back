@@ -5,3 +5,24 @@
 .vscode
 .DS_Store
 .idea
+mongodb+srv://exdbBokhan:x3txH23t3QYxymbT@recipesdb.8lokpph.mongodb.net/?retryWrites=true&w=majority&appName=RecipesDB
+/*const user = await UserCollection.findById(userId);
+
+  if (!user) {
+    throw createHttpError(401, 'User not found');
+  }
+
+  const alreadyFavorite = user.favoriteRecipes.some(
+    (id) => id.toString() === recipeId,
+  );
+
+  if (alreadyFavorite) {
+    return res.status(200).json({ message: 'Recipe already in favorites' });
+  }
+
+  user.favoriteRecipes.push(recipeId);
+  await user.save();
+
+  res.status(200).json({ message: 'Recipe added to favorites' });
+};
+*/
