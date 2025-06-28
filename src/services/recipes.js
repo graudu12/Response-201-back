@@ -21,7 +21,11 @@ export const addRecipeToFavorites = async (userId, recipeId) => {
   const user = await UserCollection.findByIdAndUpdate(
     userId,
     { $addToSet: { favoriteRecipes: recipeId } },
+
     { new: true },
+
+
+
   );
   return user;
 };

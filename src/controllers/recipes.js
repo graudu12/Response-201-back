@@ -1,18 +1,34 @@
 import {
   createRecipes,
   deleteRecipeFromFavorites,
+  addRecipeToFavorites,
   getAllRecipes,
   getRecipeById,
-  deleteOwnRecipe,
+  deleteOwnRecipe
 } from '../services/recipes.js';
+import { UserCollection } from '../db/models/user.js';
 
 export const getAllRecipesController = async (req, res) => {
+  const userId = req.user?.id; // если пользователь авторизован
   const recipes = await getAllRecipes();
+
+  let favoriteRecipeIds = [];
+  if (userId) {
+    const user = await UserCollection.findById(userId).select(
+      'favoriteRecipes',
+    );
+    favoriteRecipeIds = user?.favoriteRecipes.map((id) => id.toString()) || [];
+  }
+
+  const enrichedRecipes = recipes.map((recipe) => ({
+    ...recipe.toObject(),
+    isFavorite: favoriteRecipeIds.includes(recipe._id.toString()),
+  }));
 
   res.status(200).json({
     status: 200,
     message: 'Successfully found recipes!',
-    data: recipes,
+    data: enrichedRecipes,
   });
 };
 
@@ -47,6 +63,18 @@ export const deleteRecipeToFavoritesController = async (req, res) => {
     message: `The recipe has been successfully removed from favorites.`,
     data: user,
   });
+};
+
+export const addRecipeToFavoritesController = async (req, res, next) => {
+  const { recipeId } = req.params;
+  const userId = req.user.id;
+
+  const updatedUser = await addRecipeToFavorites(userId, recipeId);
+  if (!updatedUser) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  res.status(200).json({ message: 'Recipe added to favorites' });
 };
 
 export const deleteOwnRecipeController = async (req, res) => {
