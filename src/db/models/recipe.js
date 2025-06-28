@@ -1,48 +1,5 @@
 import { model, Schema } from 'mongoose';
 
-const ingredientSchema = new Schema({
-  name: {
-    type: String,
-    enum: [
-      'Salt',
-      'Black pepper',
-      'Sugar',
-      'Oil',
-      'Butter',
-      'Flour',
-      'Eggs',
-      'Milk',
-      'Garlic',
-      'Onion',
-      'Tomatoes',
-      'Potatoes',
-      'Carrots',
-      'Rice',
-      'Pasta',
-      'Chicken',
-      'Beef',
-      'Pork',
-      'Fish',
-      'Sour cream',
-      'Cheese',
-      'Bread',
-      'Lemon',
-      'Parsley',
-      'Dill',
-      'Soy sauce',
-      'Honey',
-      'Paprika',
-      'Vinegar',
-      'Chili pepper',
-    ],
-    required: true,
-  },
-  quantity: {
-    type: String,
-    required: true,
-  },
-});
-
 const recipeSchema = new Schema(
   {
     nameRecipe: {
@@ -51,16 +8,23 @@ const recipeSchema = new Schema(
     },
     dishPhoto: {
       type: String,
-      required: false,
     },
     recipeDescription: {
       type: [String],
       required: true,
     },
-    ingredientsList: {
-      type: [ingredientSchema],
-      required: true,
-    },
+    ingredients: [
+      {
+        id: {
+          type: String,
+          required: true,
+        },
+        measure: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     recipeCategory: {
       type: String,
       enum: [
@@ -91,16 +55,22 @@ const recipeSchema = new Schema(
       type: Number,
       required: true,
     },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: 'user',
-      required: true,
-    },
   },
   {
     timestamps: true,
     versionKey: false,
   },
 );
+const ingredientSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  desc: String,
+  img: String,
+});
+
+export const IngredientCollection = model('ingredient', ingredientSchema);
 
 export const RecipesCollection = model('recipe', recipeSchema);

@@ -1,5 +1,6 @@
 import { RecipesCollection } from '../db/models/recipe.js';
 import { UserCollection } from '../db/models/user.js';
+import createHttpError from 'http-errors';
 
 export const getRecipeById = async (recipeId) => {
   const recipe = await RecipesCollection.findById(recipeId);
