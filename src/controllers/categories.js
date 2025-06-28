@@ -1,11 +1,11 @@
 //src/controllers/categories.js
-import Category from '../models/category.js';
+import { getAllCategories } from '../services/categories.js';
 
 export const getAllCategoriesController = async (req, res, next) => {
   try {
-    const categories = await Category.find({}, 'name'); 
+    const categories = await getAllCategories();
     res.json(categories);
   } catch (error) {
-    next(error); 
+    next(error);
   }
 };
