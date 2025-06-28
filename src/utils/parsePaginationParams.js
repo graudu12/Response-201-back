@@ -11,7 +11,7 @@ const parseNumber = (number, defaultValue) => {
     return parsedNumber;
 };
 
-// Перетворює тіло запиту з рядка в число і повертає обжєкт
+// Перетворює тіло запиту з рядка в число і повертає обєкт
 export const parsePaginationParams = (query) => {
     const { page, perPage } = query;
 
