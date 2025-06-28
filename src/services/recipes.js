@@ -17,29 +17,29 @@ export const createRecipes = async (payload) => {
   return recipe;
 };
 
-export const deleteRecipeFromFavorites = async (userId, recipeId) => {
-  const recipe = await RecipesCollection.findById(recipeId);
-  if (!recipe) {
-    throw new HttpError(404, 'Recipe not found');
-  }
+export const addRecipeToFavorites = async (userId, recipeId) => {
+  const user = await UserCollection.findByIdAndUpdate(
+    userId,
+    { $addToSet: { favoriteRecipes: recipeId } },
+    { new: true },
+  );
+  return user;
+};
 
-  const updatedUser = await UserCollection.findByIdAndUpdate(
+export const deleteRecipeFromFavorites = async (userId, recipeId) => {
+  const recipe = await UserCollection.findByIdAndUpdate(
     userId,
     { $pull: { favoriteRecipes: recipeId } },
     { new: true },
   );
-
-  return {
-    message: 'Recipe removed from favorites',
-    favorites: updatedUser.favorites,
-  };
+  return recipe;
 };
 
 export const deleteOwnRecipe = async (recipeId, userId) => {
   const recipe = await RecipesCollection.findById(recipeId);
 
   if (!recipe) {
-    throw new HttpError(404, 'Recipe not found');
+    throw createHttpError(404, 'Recipe not found');
   }
 
   if (recipe.owner.toString() !== userId.toString()) {

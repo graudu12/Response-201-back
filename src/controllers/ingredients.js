@@ -10,13 +10,15 @@ export const searchRecipesByIngredientsController = async (req, res) => {
     });
   }
 
-  const ingredientNames = names.split(',').map((name) => name.trim());
-  console.log(ingredientNames);
-  const result = await searchRecipesByIngredients(ingredientNames);
+  const ingredientNames = names
+    .split(',')
+    .map((name) => name.trim().toLowerCase());
 
-  res.status(result.status).json({
-    status: result.status,
-    message: result.message,
-    data: result.data,
+  const recipes = await searchRecipesByIngredients(ingredientNames);
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully found recipes!',
+    data: recipes,
   });
 };
