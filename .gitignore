@@ -26,3 +26,9 @@ mongodb+srv://exdbBokhan:x3txH23t3QYxymbT@recipesdb.8lokpph.mongodb.net/?retryWr
   res.status(200).json({ message: 'Recipe added to favorites' });
 };
 */
+
+
+https://github.com/graudu12/Response-201-back/pull/4
+http://localhost:3000/api-docs/#/Recipes/addFavoriteRecipe
+
+https://github.com/graudu12/Response-201-back
