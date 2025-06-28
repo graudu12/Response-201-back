@@ -4,6 +4,7 @@ import {
   addRecipeToFavorites,
   getAllRecipes,
   getRecipeById,
+  deleteOwnRecipe
 } from '../services/recipes.js';
 import { UserCollection } from '../db/models/user.js';
 
@@ -74,4 +75,17 @@ export const addRecipeToFavoritesController = async (req, res, next) => {
   }
 
   res.status(200).json({ message: 'Recipe added to favorites' });
+};
+
+export const deleteOwnRecipeController = async (req, res) => {
+  const { recipeId } = req.params;
+  const userId = req.user._id;
+
+  const result = await deleteOwnRecipe(recipeId, userId);
+
+  res.status(200).json({
+    status: 200,
+    message: `The recipe has been successfully removed.`,
+    data: result,
+  });
 };

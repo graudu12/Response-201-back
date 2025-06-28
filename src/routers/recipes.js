@@ -31,4 +31,9 @@ router.delete(
   ctrlWrapper(deleteRecipeToFavoritesController),
 );
 
+router.delete(
+  '/:recipeId/ownRecipe',
+  isValidId,
+  ctrlWrapper(deleteRecipeToFavoritesController),
+);
 export default router;
