@@ -41,6 +41,7 @@ export const getAllRecipesController = async (req, res) => {
   });
 };
 
+
 export const createRecipesController = async (req, res) => {
   const recipe = await createRecipes(req.body);
 
