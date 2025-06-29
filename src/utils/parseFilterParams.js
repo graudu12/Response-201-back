@@ -11,10 +11,10 @@ const parseCategory = async (category) => {
     return allowedCategory ? category : undefined;
 };
 
-export const parseFilterParams = (query) => {
+export const parseFilterParams = async (query) => {
     const { ingredient, category } = query;
-    const parsedIsIngredients = parseIngredients(ingredient);
-    const parsedIsCategory = parseCategory(category);
+    const parsedIsIngredients = await parseIngredients(ingredient);
+    const parsedIsCategory = await parseCategory(category);
 
     return {
         ingredient: parsedIsIngredients,
