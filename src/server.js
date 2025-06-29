@@ -8,7 +8,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { getEnvVar } from './utils/getEnvVar.js';
 import allRouters from './routers/index.js';
-
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 export const setupServer = () => {
   dotenv.config();
@@ -26,7 +26,7 @@ export const setupServer = () => {
   app.use(cors());
   app.use('/api', allRouters);
   // app.use('/uploads', express.static(UPLOAD_DIR));
-  // app.use('/api-docs', swaggerDocs());
+  app.use('/api-docs', swaggerDocs());
   app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
