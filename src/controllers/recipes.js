@@ -4,12 +4,12 @@ import {
   addRecipeToFavorites,
   getAllRecipes,
   getRecipeById,
-  deleteOwnRecipe
+  deleteOwnRecipe,
 } from '../services/recipes.js';
 import { UserCollection } from '../db/models/user.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
-import { parsePaginationParams } from "../utils/parsePaginationParams.js";
-import { parseSortParams } from "../utils/parseSortParams.js";
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const getAllRecipesController = async (req, res) => {
   const userId = req.user?.id; // если пользователь авторизован
@@ -17,7 +17,9 @@ export const getAllRecipesController = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
 
+
   const { recipes, ...paginationData } = await getAllRecipes({ page, perPage, sortBy, sortOrder, filter });
+
 
   let favoriteRecipeIds = [];
   if (userId) {
@@ -75,7 +77,6 @@ export const deleteRecipeToFavoritesController = async (req, res) => {
 export const addRecipeToFavoritesController = async (req, res, next) => {
   const { recipeId } = req.params;
   const userId = req.user.id;
-
   const updatedUser = await addRecipeToFavorites(userId, recipeId);
   if (!updatedUser) {
     return res.status(404).json({ message: 'User not found' });
