@@ -15,7 +15,7 @@ const recipeSchema = new Schema(
     },
     ingredients: [
       {
-        id: {
+        name: {
           type: String,
           required: true,
         },
@@ -26,25 +26,8 @@ const recipeSchema = new Schema(
       },
     ],
     recipeCategory: {
-      type: String,
-      enum: [
-        'Appetizers',
-        'Soups',
-        'Salads',
-        'Main courses',
-        'Side dishes',
-        'Desserts',
-        'Baked goods',
-        'Sandwiches',
-        'Pasta & Noodles',
-        'Pizza',
-        'Seafood dishes',
-        'Vegetarian & Vegan dishes',
-        'Grill & BBQ',
-        'Breakfast dishes',
-        'Beverages',
-        'Sauces & Dressings',
-      ],
+      type: Schema.Types.ObjectId,
+      ref: 'category',
       required: true,
     },
     calories: {
