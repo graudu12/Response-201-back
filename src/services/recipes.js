@@ -10,10 +10,16 @@ export const getRecipeById = async (recipeId) => {
 
 export const getAllRecipes = async ({ page, perPage, sortBy, sortOrder, filter }) => {
   let skip = (page - 1) * perPage;
-  const recipesQuery = RecipesCollection.find(filter);
+  const recipesQuery = RecipesCollection.find();
+
   if (filter.ingredient) {
-    recipesQuery.where();
+    recipesQuery.where("ingredients.name").equals(filter.ingredient);
   };
+
+  if (filter.category) {
+    recipesQuery.where("recipeCategory").equals(filter.category);
+  };
+
   const recipesCount = await RecipesCollection.countDocuments(recipesQuery.getFilter());
 
   const recipes = await recipesQuery.skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).exec();

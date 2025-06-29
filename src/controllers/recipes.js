@@ -17,13 +17,9 @@ export const getAllRecipesController = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const filter = parseFilterParams(req.query);
 
-  const recipes = await getAllRecipes({
-    page,
-    perPage,
-    sortBy,
-    sortOrder,
-    filter,
-  });
+
+  const { recipes, ...paginationData } = await getAllRecipes({ page, perPage, sortBy, sortOrder, filter });
+
 
   let favoriteRecipeIds = [];
   if (userId) {
@@ -41,7 +37,7 @@ export const getAllRecipesController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully found recipes!',
-    data: enrichedRecipes,
+    data: { enrichedRecipes, ...paginationData }
   });
 };
 
