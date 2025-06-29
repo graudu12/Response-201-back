@@ -66,15 +66,25 @@ const recipeSchema = new Schema(
     versionKey: false,
   },
 );
+
+
 const ingredientSchema = new Schema({
   name: {
     type: String,
     required: true,
     unique: true,
   },
-  desc: String,
-  img: String,
 });
+
+const categorySchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+});
+
+export const CategoryCollection = model('category', categorySchema);
 
 export const IngredientCollection = model('ingredient', ingredientSchema);
 

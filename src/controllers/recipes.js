@@ -7,10 +7,17 @@ import {
   deleteOwnRecipe
 } from '../services/recipes.js';
 import { UserCollection } from '../db/models/user.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
+import { parsePaginationParams } from "../utils/parsePaginationParams.js";
+import { parseSortParams } from "../utils/parseSortParams.js";
 
 export const getAllRecipesController = async (req, res) => {
   const userId = req.user?.id; // если пользователь авторизован
-  const recipes = await getAllRecipes();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const filter = parseFilterParams(req.query);
+
+  const recipes = await getAllRecipes({ page, perPage, sortBy, sortOrder, filter });
 
   let favoriteRecipeIds = [];
   if (userId) {
