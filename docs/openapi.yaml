@@ -1,0 +1,38 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Recipes app
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: This is the documentation for the Recipes app.
+tags:
+  - name: Recipes
+    description: Operations about users.
+  - name: Auth
+    description: Auth operations.
+
+servers:
+  - url: http://127.0.0.1:3000
+    description: Local development server
+paths:
+  /api/recipes/{recipeId}/favorites:
+    patch:
+      $ref: ../swagger/paths/api/recipes/{id}/favourites/patch.yaml
+  /api/ingredients:
+    get:
+      $ref: ../swagger/paths/api/ingredients/get.yaml
+  /api/auth/login:
+    post:
+      $ref: ../swagger/paths/api/auth/login/post.yaml
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/api/auth/register/post.yaml
+  /api/auth/logout:
+    post:
+      $ref: ../swagger/paths/api/auth/logout/post.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

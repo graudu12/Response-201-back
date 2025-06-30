@@ -1,4 +1,3 @@
-//src/routers/categories.js
 import { Router } from 'express';
 import { getAllCategoriesController } from '../controllers/categories.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';

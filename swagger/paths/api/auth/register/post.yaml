@@ -1,0 +1,64 @@
+tags:
+  - Auth
+summary: Register a user
+operationId: RegisterUser
+description: "Register a user"
+security: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - email
+          - password
+        properties:
+          name:
+            description: "Users name"
+            type: string
+            example: "John Doe"
+          email:
+            description: "Users valid email"
+            type: string
+            example: "john_doe@email.com"
+          password:
+            description: "Users password"
+            type: string
+            example: "fdse235!@"
+responses:
+  "201":
+    description: Registers a user
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully registered a user!
+  "400":
+    description: Bad request
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Bad request
+  "500":
+    $ref: "../../../../components/responses/500.yaml"
