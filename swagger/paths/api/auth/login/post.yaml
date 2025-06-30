@@ -1,0 +1,78 @@
+tags:
+  - Auth
+summary: Login a user
+operationId: loginUser
+description: "Login a user"
+security: []
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: "Users email that was used for registration"
+            type: string
+            example: "john_doe@email.com"
+          password:
+            description: "Users password that was used for registration"
+            type: string
+            example: "fdse235!@"
+responses:
+  "200":
+    description: Logs in the user
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in a user!
+            data:
+              type: object
+              $ref: "../../../../components/schemas/LoginResponseData.yaml"
+  "400":
+    description: Bad request
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Bad request
+  "404":
+    description: User not found or email not registered
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: User not found or email not registered
+  "500":
+    $ref: "../../../../components/responses/500.yaml"

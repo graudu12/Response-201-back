@@ -22,6 +22,15 @@ paths:
   /api/ingredients:
     get:
       $ref: ../swagger/paths/api/ingredients/get.yaml
+  /api/auth/login:
+    post:
+      $ref: ../swagger/paths/api/auth/login/post.yaml
+  /api/auth/register:
+    post:
+      $ref: ../swagger/paths/api/auth/register/post.yaml
+  /api/auth/logout:
+    post:
+      $ref: ../swagger/paths/api/auth/logout/post.yaml
 components:
   securitySchemes:
     bearerAuth:
