@@ -14,11 +14,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    favoriteRecipes: {
-        type: [Schema.Types.ObjectId],
+    favoriteRecipes: [{
+        type: Schema.Types.ObjectId,
         ref: "recipe",
-        default: [],
-    }
+    }]
 },
     {
         timestamps: true,

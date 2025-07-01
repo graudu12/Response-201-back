@@ -3,8 +3,8 @@ import { SessionCollection } from "../db/models/session.js";
 import { UserCollection } from "../db/models/user.js";
 
 export async function auth(req, res, next) {
-    const { authorization } = req.headers;
 
+    const { authorization } = req.headers;
     if (typeof authorization !== 'string') {
         return next(
             new createHttpError.Unauthorized('Please provide access token'),

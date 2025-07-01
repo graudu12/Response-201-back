@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import pino from 'pino-http';
-import router from './routers/index.js';
 import cors from 'cors';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -27,7 +26,6 @@ export const setupServer = () => {
   app.use('/api', allRouters);
   // app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
-  app.use(router);
   app.use(notFoundHandler);
   app.use(errorHandler);
   app.listen(PORT, (error) => {

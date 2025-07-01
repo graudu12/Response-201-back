@@ -50,7 +50,7 @@ const recipeSchema = new Schema(
       required: true,
     },
     cookingTime: {
-      type: Number,
+      type: String,
       required: true,
     },
     owner: {
