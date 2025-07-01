@@ -1,5 +1,6 @@
 import { IngredientCollection } from '../db/models/recipe.js';
 
 export const getAllIngredients = async () => {
-  return await IngredientCollection.find();
+  const ingredients = await IngredientCollection.find({}, 'name');
+  return ingredients.map((i) => i.name);
 };

@@ -15,7 +15,7 @@ export const getAllRecipesController = async (req, res) => {
   const userId = req.user?.id; // если пользователь авторизован
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
-  const filter = parseFilterParams(req.query);
+  const filter = await parseFilterParams(req.query);
 
 
   const { recipes, ...paginationData } = await getAllRecipes({ page, perPage, sortBy, sortOrder, filter });

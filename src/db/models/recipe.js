@@ -1,5 +1,16 @@
 import { model, Schema } from 'mongoose';
 
+const categorySchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  }
+});
+
 const recipeSchema = new Schema(
   {
     nameRecipe: {
@@ -13,10 +24,15 @@ const recipeSchema = new Schema(
       type: [String],
       required: true,
     },
+    instructions: {
+      type: String,
+      required: true,
+    },
     ingredients: [
       {
-        name: {
+        id: {
           type: String,
+          ref: 'ingredient',
           required: true,
         },
         measure: {
@@ -26,8 +42,7 @@ const recipeSchema = new Schema(
       },
     ],
     recipeCategory: {
-      type: Schema.Types.ObjectId,
-      ref: 'category',
+      type: String,
       required: true,
     },
     calories: {
@@ -59,13 +74,7 @@ const ingredientSchema = new Schema({
   },
 });
 
-const categorySchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true
-  },
-});
+
 
 export const CategoryCollection = model('category', categorySchema);
 

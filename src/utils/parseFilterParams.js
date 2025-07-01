@@ -1,14 +1,15 @@
-import { IngredientCollection } from "../db/models/recipe.js";
+import { CategoryCollection, IngredientCollection } from "../db/models/recipe.js";
 
 // Селект
 const parseIngredients = async (ingredient) => {
     const allowedIngredients = await IngredientCollection.findOne({ name: ingredient });
-    return allowedIngredients ? ingredient : undefined;
+    return allowedIngredients ? allowedIngredients._id : undefined;
 };
 
 const parseCategory = async (category) => {
-    const allowedCategory = await IngredientCollection.findOne({ name: category });
-    return allowedCategory ? category : undefined;
+    const allowedCategory = await CategoryCollection.findOne({ name: category });
+    return allowedCategory ? allowedCategory.name : undefined;
+
 };
 
 export const parseFilterParams = async (query) => {
