@@ -18,7 +18,7 @@ servers:
 paths:
   /api/recipes/{recipeId}/favorites:
     patch:
-      $ref: ../swagger/paths/api/recipes/{id}/favourites/patch.yaml
+      $ref: ../swagger/paths/api/recipes/{id}/favorites/patch.yaml
   /api/ingredients:
     get:
       $ref: ../swagger/paths/api/ingredients/get.yaml
