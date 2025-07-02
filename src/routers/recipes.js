@@ -17,16 +17,14 @@ router.get('/', ctrlWrapper(getAllRecipesController));
 
 router.post('/', auth, ctrlWrapper(createRecipesController));
 
-router.get("/myRecipes", auth, ctrlWrapper(getMyRecipesController));
+router.get('/myRecipes', auth, ctrlWrapper(getMyRecipesController));
 
 router.get('/favorites', auth, ctrlWrapper(getFavoriteRecipesController));
 
 router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
-
-
 router.patch(
-  '/:recipeId/favourites',
+  '/:recipeId/favorites',
   isValidId,
   auth,
   ctrlWrapper(addRecipeToFavoritesController),
