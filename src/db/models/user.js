@@ -2,35 +2,19 @@ import { Schema, model } from 'mongoose';
 
 const userSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
-      required: false,
+      required: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
     },
-    password: {
-      type: String,
-      required: true,
-    }, 
-    fullName: { type: String, 
-        required: false },
-    avatarUrl: {
-      type: String,
-      default: '',
-    },
-    role: {
-      type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
-    },
-    lastLogin: {
-      type: Date,
-      default: null,
-    },
-    
+    password: { type: String, required: true },
+    avatarUrl: { type: String, default: '' },
+    role: { type: String, enum: ['user', 'admin'], default: 'user' },
+    lastLogin: { type: Date, default: null },
   },
   {
     timestamps: true,
