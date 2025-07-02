@@ -18,7 +18,7 @@ router.post('/', ctrlWrapper(createRecipesController));
 router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
 router.patch(
-  '/:recipeId/favourites',
+  '/:recipeId/favorites',
   isValidId,
   auth,
   ctrlWrapper(addRecipeToFavoritesController),
