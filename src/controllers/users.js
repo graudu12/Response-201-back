@@ -1,25 +1,13 @@
-import { UserCollection } from '../db/models/user.js';
+import { getCurrentUserService } from '../services/users.js';
 
 export const getCurrentUserControl = async (req, res, next) => {
   try {
-    const { id } = req.user;
+    const data = await getCurrentUserService(req.user.id);
 
-    const user = await UserCollection.findById(id);
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json({
-      id: user._id,
-      username: user.name,
-      initial: (user.name || '').charAt(0).toUpperCase() || '',
-      fullName: user.name,
-      avatarUrl: user.avatarUrl || '',
-      role: user.role,
-      createdAt: user.createdAt,
-      lastLogin: user.lastLogin,
-      favoriteRecipes: user.favoriteRecipes || [],
+    res.status(200).json({
+      status: 200,
+      message: 'Successfully found info about user',
+      data,
     });
   } catch (error) {
     next(error);
