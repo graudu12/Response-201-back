@@ -117,7 +117,7 @@ export const addRecipeToFavoritesController = async (req, res, next) => {
 
 export const deleteOwnRecipeController = async (req, res) => {
   const { recipeId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user.id;
 
   const result = await deleteOwnRecipe(recipeId, userId);
 
