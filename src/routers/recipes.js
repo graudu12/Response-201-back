@@ -33,6 +33,7 @@ router.delete(
 
 router.delete(
   '/:recipeId/ownRecipe',
+  auth,
   isValidId,
   ctrlWrapper(deleteRecipeToFavoritesController),
 );
