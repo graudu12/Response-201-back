@@ -3,6 +3,16 @@ import { UserCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
+export const getFavoriteRecipes = async (id) => {
+  const user = await UserCollection.findById(id).populate("favoriteRecipes");
+  return user.favoriteRecipes;
+};
+
+export const getMyRecipes = async (id) => {
+  const myRecipes = await RecipesCollection.find({ owner: id });
+  return myRecipes;
+};
+
 export const getRecipeById = async (recipeId) => {
   const recipe = await RecipesCollection.findById(recipeId);
   return recipe;

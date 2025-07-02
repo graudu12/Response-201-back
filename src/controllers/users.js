@@ -19,6 +19,7 @@ export const getCurrentUserControl = async (req, res, next) => {
       role: user.role,
       createdAt: user.createdAt,
       lastLogin: user.lastLogin,
+      favoriteRecipes: user.favoriteRecipes || [],
     });
   } catch (error) {
     next(error);

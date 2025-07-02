@@ -11,10 +11,20 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
-    password: { type: String, required: true },
+    password: {
+      type: String,
+      required: true,
+    },
+
     avatarUrl: { type: String, default: '' },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     lastLogin: { type: Date, default: null },
+
+    favoriteRecipes: {
+      type: [Schema.Types.ObjectId],
+      ref: 'recipe',
+      default: [],
+    },
   },
   {
     timestamps: true,
