@@ -5,11 +5,36 @@ import {
   getAllRecipes,
   getRecipeById,
   deleteOwnRecipe,
+  getMyRecipes,
+  getFavoriteRecipes,
 } from '../services/recipes.js';
 import { UserCollection } from '../db/models/user.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
+
+export const getFavoriteRecipesController = async (req, res) => {
+  const { id } = req.user;
+  const favoriteRecipes = await getFavoriteRecipes(id);
+
+  res.status(200).json({
+    status: 200,
+    message: `Favorite contacts found.`,
+    data: favoriteRecipes,
+  });
+};
+
+export const getMyRecipesController = async (req, res) => {
+  const { id } = req.user;
+  console.log(req.user);
+  const myRecipes = await getMyRecipes(id);
+
+  res.status(200).json({
+    status: 200,
+    message: `Your recipes have been successfully found!`,
+    data: myRecipes,
+  });
+};
 
 export const getAllRecipesController = async (req, res) => {
   const userId = req.user?.id; // если пользователь авторизован
@@ -32,7 +57,6 @@ export const getAllRecipesController = async (req, res) => {
     );
     favoriteRecipeIds = user?.favoriteRecipes.map((id) => id.toString()) || [];
   }
-
   const enrichedRecipes = recipes.map((recipe) => ({
     ...recipe.toObject(),
     isFavorite: favoriteRecipeIds.includes(recipe._id.toString()),
@@ -46,7 +70,9 @@ export const getAllRecipesController = async (req, res) => {
 };
 
 export const createRecipesController = async (req, res) => {
-  const recipe = await createRecipes(req.body);
+  const { id } = req.user;
+  const recipeData = { ...req.body, owner: id };
+  const recipe = await createRecipes(recipeData);
 
   res.status(200).json({
     status: 200,
@@ -91,7 +117,7 @@ export const addRecipeToFavoritesController = async (req, res, next) => {
 
 export const deleteOwnRecipeController = async (req, res) => {
   const { recipeId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user.id;
 
   const result = await deleteOwnRecipe(recipeId, userId);
 
