@@ -19,7 +19,7 @@ export const getFavoriteRecipesController = async (req, res) => {
 
   res.status(200).json({
     status: 200,
-    message: `Favorite contacts found.`,
+    message: `Favorite recipes found.`,
     data: favoriteRecipes,
   });
 };
