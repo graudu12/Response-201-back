@@ -1,0 +1,46 @@
+type: object
+required:
+  - name
+  - email
+  - password
+  - favoriteRecipes
+
+properties:
+  _id:
+          type: string
+          example: 68655a534d78a90790563b36
+  name:
+    type: string
+    description: Name of user
+    example: Dave Norton
+
+  email:
+    type: string
+    description: Contact's email
+    format: email
+    example: mark.davon@gmail.com
+
+  password:
+    type: string
+    description: user password 
+    example: 123456
+    minLength: 6
+
+  favoriteRecipes:
+    type:
+      -  array
+    description: favorite recipes of user
+    example: "Cabbage Soup"
+    default: null
+
+  createdAt:
+    type: string
+    format: date-time
+    description: Contact created at
+    example: 2025-03-27T19:43:21.686+00:00
+
+  updatedAt:
+    type: string
+    format: date-time
+    description: Contact updated at
+    example: 2025-03-28T19:43:21.686+00:00
