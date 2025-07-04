@@ -428,7 +428,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Get user by id",
+            "description": "Get info about user",
             "content": {
               "application/json": {
                 "schema": {
