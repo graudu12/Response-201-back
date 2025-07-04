@@ -1,0 +1,29 @@
+tags:
+  - Recipes
+summary: Get my recipes
+operationId: getMyRecipes
+description: Returns recipes created by the authenticated user.
+security:
+  - bearerAuth: []
+responses:
+  "200":
+    description: Successfully found user's recipes
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Your recipes have been successfully found!
+            data:
+              type: array
+              items:
+                $ref: ../../../../components/schemas/recipe.yaml
+  "401":
+    $ref: ../../../../components/responses/401.yaml
+  "500":
+    $ref: ../../../../components/responses/500.yaml
