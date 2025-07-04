@@ -2,7 +2,7 @@ type: object
 required:
   - name
   - email
-  - password
+  # - password
   - favoriteRecipes
 
 properties:
@@ -16,22 +16,22 @@ properties:
 
   email:
     type: string
-    description: Contact's email
     format: email
+    description: Email of user
     example: mark.davon@gmail.com
 
-  password:
-    type: string
-    description: user password 
-    example: 123456
-    minLength: 6
+  # password:
+  #   type: string
+  #   description: user password 
+  #   example: 123456
 
   favoriteRecipes:
-    type:
-      -  array
-    description: favorite recipes of user
-    example: "Cabbage Soup"
-    default: null
+    type: array
+    description: favorite recipes
+    items:
+      type: string
+      example: 64a1234567890abcdef99999
+      default: []
 
   createdAt:
     type: string

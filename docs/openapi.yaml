@@ -31,8 +31,9 @@ paths:
   /api/auth/logout:
     post:
       $ref: ../swagger/paths/api/auth/logout/post.yaml
+  /api/users/current:    
     get: 
-      $ref: ../swagger/paths/api/recipes/{id}/get.yaml
+      $ref: ../swagger/paths/api/users/get.yaml
 components:
   securitySchemes:
     bearerAuth:
