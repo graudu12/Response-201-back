@@ -28,7 +28,7 @@ paths:
     get:
       $ref: ../swagger/paths/api/recipes/myRecipes/get.yaml
 
-  /api/recipes/favorites:
+  /api/recipes/{id}/favorites:
     patch:
       $ref: ../swagger/paths/api/recipes/{id}/favorites/get.yaml
 
