@@ -28,21 +28,17 @@ paths:
     get:
       $ref: ../swagger/paths/api/recipes/myRecipes/get.yaml
 
-  /api/recipes/{id}/favorites:
-    patch:
-      $ref: ../swagger/paths/api/recipes/{id}/favorites/get.yaml
-
   /api/recipes/{recipeId}:
-    delete:
-       $ref: ../swagger/paths/api/recipes/myRecipes/delete.yaml
     get:
-      $ref: ../swagger/paths/api/recipes/{id}/get.yaml
-
-  /api/recipes/{recipeID}/favorites:
-    patch:
-      $ref: ../swagger/paths/api/recipes/{id}/favorites/patch.yaml
+      $ref: ../swagger/paths/api/recipes/{recipeId}/get.yaml
     delete:
-      $ref: ../swagger/paths/api/recipes/{id}/favorites/delete.yaml
+      $ref: ../swagger/paths/api/recipes/{recipeId}/delete.yaml
+
+  /api/recipes/{recipeId}/favorites:
+    patch:
+      $ref: ../swagger/paths/api/recipes/{recipeId}/favorites/patch.yaml
+    delete:
+      $ref: ../swagger/paths/api/recipes/{recipeId}/favorites/delete.yaml
 
   /api/ingredients:
     get:
@@ -59,6 +55,7 @@ paths:
   /api/auth/logout:
     post:
       $ref: ../swagger/paths/api/auth/logout/post.yaml
+
 
 components:
   securitySchemes:
