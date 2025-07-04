@@ -38,7 +38,7 @@ paths:
     get:
       $ref: ../swagger/paths/api/recipes/{id}/get.yaml
 
-  /api/recipes/{recipeId}/favorites:
+  /api/recipes/{id}/favorites:
     patch:
       $ref: ../swagger/paths/api/recipes/{id}/favorites/patch.yaml
     delete:
