@@ -1,10 +1,9 @@
 tags:
   - Ingredients
-summary: Get all ingredients
+summary: Get all available ingredients
 operationId: getAllIngredients
 description: Get all ingredients
-security:
-  - bearerAuth: []
+security: []
 responses:
   "200":
     description: Successfully found ingredients

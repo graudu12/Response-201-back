@@ -1,0 +1,7 @@
+allOf:
+  - $ref: ../schemas/recipe.yaml
+  - type: object
+    properties:
+      isFavorite:
+        type: boolean
+        example: true

@@ -1,0 +1,39 @@
+tags:
+  - Recipes
+summary: Delete my recipe
+operationId: deleteOwnRecipe
+description: Deletes a recipe if it was created by the authenticated user. Also removes it from all users' favorites.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: recipeId
+    required: true
+    schema:
+      type: string
+responses:
+  200:
+    description: Recipe deleted successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: The recipe has been successfully removed.
+            data:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Recipe deleted successfully and removed from all favorites
+  401:
+    $ref: ../../../../components/responses/401.yaml
+  403:
+    $ref: ../../../../components/responses/403.yaml
+  404:
+    $ref: ../../../../components/responses/404.yaml

@@ -1,1 +1,80 @@
-[]
+tags:
+  - Recipes
+summary: Create a new recipe
+operationId: createRecipes
+description: Creates a recipe and assigns the authenticated user as the owner.
+security:
+  - bearerAuth: []
+requestBody:
+   required: true
+   content:
+     application/json:
+            schema:
+              type: object
+              required:
+                - nameRecipe
+                - recipeDescription
+                - instructions
+                - ingredients
+                - recipeCategory
+                - calories
+                - cookingTime
+              properties:
+                  nameRecipe:
+                    type: string
+                    example: Greek Salad
+                  dishPhoto:
+                    type: string
+                    format: uri
+                    example: https://example.com/photos/salad.jpg
+                  recipeDescription:
+                    type: array
+                    items:
+                      type: string
+                    example: ["Fresh and tasty", "Easy to prepare"]
+                  instructions:
+                    type: string
+                    example: "Chop vegetables, mix and serve."
+                  ingredients:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - id
+                        - measure
+                      properties:
+                        id:
+                          type: string
+                          example: "64e2abc9f6a0123456789012"
+                        measure:
+                          type: string
+                          example: "100g"
+                  recipeCategory:
+                    type: string
+                    example: "Salads"
+                  calories:
+                    type: number
+                    example: 250
+                  cookingTime:
+                    type: string
+                    example: "15 min"
+responses:
+        '200':
+          description: Recipe successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully create a recipe!
+                  data:
+                    $ref: ../../../components/schemas/recipe.yaml
+
+        '401':
+          $ref: ../../../components/responses/401.yaml
+

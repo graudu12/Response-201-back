@@ -16,10 +16,13 @@ requestBody:
           email:
             description: "Users email that was used for registration"
             type: string
+            format: email
             example: "john_doe@email.com"
           password:
             description: "Users password that was used for registration"
             type: string
+            minLength: 10
+            maxLength: 30
             example: "fdse235!@"
 responses:
   "200":
