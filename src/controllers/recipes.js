@@ -14,8 +14,11 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const getFavoriteRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
   const { id } = req.user;
-  const favoriteRecipes = await getFavoriteRecipes(id);
+
+  const favoriteRecipes = await getFavoriteRecipes({ page, perPage, sortBy, sortOrder, id });
 
   res.status(200).json({
     status: 200,
@@ -25,9 +28,11 @@ export const getFavoriteRecipesController = async (req, res) => {
 };
 
 export const getMyRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
   const { id } = req.user;
-  console.log(req.user);
-  const myRecipes = await getMyRecipes(id);
+
+  const myRecipes = await getMyRecipes({ page, perPage, sortBy, sortOrder, id });
 
   res.status(200).json({
     status: 200,
