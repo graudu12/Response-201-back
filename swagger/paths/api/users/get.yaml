@@ -1,4 +1,3 @@
-
 tags:
   - Users
 summary: Get current user
@@ -13,10 +12,6 @@ responses:
       application/json:
         schema:
           type: object
-          required:
-            - status
-            - message
-            - data
           properties:
             status:
               type: integer
@@ -25,7 +20,7 @@ responses:
               type: string
               example: Successfully found info about user
             data:
-              $ref: ../../../components/schemas/user.yaml
+              $ref: '../../../components/schemas/user.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':

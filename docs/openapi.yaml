@@ -7,10 +7,12 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is the documentation for the Recipes app.
 tags:
-  - name: Recipes
+  - name : Recipes
     description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: User
+    description: User data.
 
 servers:
   - url: http://127.0.0.1:3000

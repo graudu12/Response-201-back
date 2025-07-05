@@ -23,6 +23,10 @@
     {
       "name": "Auth",
       "description": "Auth operations."
+    },
+    {
+      "name": "User",
+      "description": "User data."
     }
   ],
   "paths": {
@@ -433,11 +437,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -579,11 +578,6 @@
       },
       "user": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "favoriteRecipes"
-        ],
         "properties": {
           "_id": {
             "type": "string",
@@ -605,21 +599,8 @@
             "description": "favorite recipes",
             "items": {
               "type": "string",
-              "example": "64a1234567890abcdef99999",
-              "default": []
+              "example": "64a1234567890abcdef99999"
             }
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Contact created at",
-            "example": "2025-03-27T19:43:21.686+00:00"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Contact updated at",
-            "example": "2025-03-28T19:43:21.686+00:00"
           }
         }
       }

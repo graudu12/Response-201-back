@@ -1,8 +1,8 @@
-import { getCurrentUserService } from '../services/users.js';
+import { getCurrentUser} from '../services/users.js';
 
 export const getCurrentUserControl = async (req, res, next) => {
   try {
-    const data = await getCurrentUserService(req.user.id);
+    const data = await getCurrentUser(req.user.id);
 
     res.status(200).json({
       status: 200,

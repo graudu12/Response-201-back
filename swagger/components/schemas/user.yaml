@@ -1,14 +1,9 @@
 type: object
-required:
-  - name
-  - email
-  # - password
-  - favoriteRecipes
 
 properties:
   _id:
-          type: string
-          example: 68655a534d78a90790563b36
+    type: string
+    example: 68655a534d78a90790563b36
   name:
     type: string
     description: Name of user
@@ -20,27 +15,10 @@ properties:
     description: Email of user
     example: mark.davon@gmail.com
 
-  # password:
-  #   type: string
-  #   description: user password 
-  #   example: 123456
-
   favoriteRecipes:
     type: array
     description: favorite recipes
     items:
       type: string
       example: 64a1234567890abcdef99999
-      default: []
-
-  createdAt:
-    type: string
-    format: date-time
-    description: Contact created at
-    example: 2025-03-27T19:43:21.686+00:00
-
-  updatedAt:
-    type: string
-    format: date-time
-    description: Contact updated at
-    example: 2025-03-28T19:43:21.686+00:00
+   
