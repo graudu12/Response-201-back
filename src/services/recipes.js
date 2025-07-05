@@ -1,31 +1,85 @@
 import { RecipesCollection } from '../db/models/recipe.js';
 import { UserCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
-import { calculatePaginationData } from "../utils/calculatePaginationData.js";
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+
+export const getFavoriteRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => {
+  let skip = (page - 1) * perPage;
+
+  const userAllRecipes = await UserCollection.findById(id).populate("favoriteRecipes");
+
+  const recipesCount = userAllRecipes.favoriteRecipes.length;
+
+  const userPaginationRecipe = await UserCollection.findById(id).populate({
+    path: "favoriteRecipes",
+    options: {
+      sort: { [sortBy]: sortOrder },
+      skip,
+      limit: perPage,
+    }
+  });
+  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+
+  return {
+    recipes: userPaginationRecipe.favoriteRecipes,
+    pagination: paginationData
+  };
+};
+
+
+
+export const getMyRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => {
+  let skip = (page - 1) * perPage;
+
+  const recipesCount = await RecipesCollection.countDocuments({ owner: id });
+
+  const paginationRecipes = await RecipesCollection.find({ owner: id }).skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).exec();
+
+  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+
+  return {
+    recipes: paginationRecipes,
+    pagination: paginationData,
+  };
+};
 
 export const getRecipeById = async (recipeId) => {
   const recipe = await RecipesCollection.findById(recipeId);
   return recipe;
 };
 
-export const getAllRecipes = async ({ page, perPage, sortBy, sortOrder, filter }) => {
+export const getAllRecipes = async ({
+  page,
+  perPage,
+  sortBy,
+  sortOrder,
+  filter,
+}) => {
   let skip = (page - 1) * perPage;
+
   const recipesQuery = RecipesCollection.find();
 
   if (filter.ingredient) {
-    recipesQuery.where("ingredients.name").equals(filter.ingredient);
-  };
-
+    recipesQuery.where('ingredients.id').equals(filter.ingredient);
+  }
   if (filter.category) {
-    recipesQuery.where("recipeCategory").equals(filter.category);
-  };
+    recipesQuery.where('recipeCategory').equals(filter.category);
+  }
 
-  const recipesCount = await RecipesCollection.countDocuments(recipesQuery.getFilter());
+  const recipesCount = await RecipesCollection.countDocuments(
+    recipesQuery.getFilter(),
+  );
 
-  const recipes = await recipesQuery.skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).exec();
+  const recipes = await recipesQuery
+    .skip(skip)
+    .limit(perPage)
+    .sort({ [sortBy]: sortOrder })
+    .populate("ingredients.id")
+    .exec();
   const paginationData = calculatePaginationData(recipesCount, perPage, page);
   return {
-    recipes, ...paginationData
+    recipes,
+    ...paginationData,
   };
 };
 

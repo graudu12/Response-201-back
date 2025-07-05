@@ -1,35 +1,36 @@
-import { model, Schema } from "mongoose";
+import { Schema, model } from 'mongoose';
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-    favoriteRecipes: {
-        type: [Schema.Types.ObjectId],
-        ref: "recipe",
-        default: [],
-    }
-},
-    {
-        timestamps: true,
-        versionKey: false,
-    }
+    favoriteRecipes: [{
+      type: Schema.Types.ObjectId,
+      ref: "recipe",
+    }],
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
 );
 
+//cховаємо пароль для фронтенду
 userSchema.methods.toJSON = function () {
-    const obj = this.toObject();
-    delete obj.password;
-    return obj;
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
 };
 
-export const UserCollection = model("user", userSchema);
+export const UserCollection = model('user', userSchema);

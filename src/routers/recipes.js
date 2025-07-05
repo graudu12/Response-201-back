@@ -5,6 +5,8 @@ import {
   getAllRecipesController,
   getRecipeByIdController,
   addRecipeToFavoritesController,
+  getMyRecipesController,
+  getFavoriteRecipesController,
 } from '../controllers/recipes.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
@@ -13,12 +15,16 @@ const router = Router();
 
 router.get('/', ctrlWrapper(getAllRecipesController));
 
-router.post('/', ctrlWrapper(createRecipesController));
+router.post('/', auth, ctrlWrapper(createRecipesController));
+
+router.get('/myRecipes', auth, ctrlWrapper(getMyRecipesController));
+
+router.get('/favorites', auth, ctrlWrapper(getFavoriteRecipesController));
 
 router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
 router.patch(
-  '/:recipeId/favourites',
+  '/:recipeId/favorites',
   isValidId,
   auth,
   ctrlWrapper(addRecipeToFavoritesController),
@@ -33,6 +39,7 @@ router.delete(
 
 router.delete(
   '/:recipeId/ownRecipe',
+  auth,
   isValidId,
   ctrlWrapper(deleteRecipeToFavoritesController),
 );

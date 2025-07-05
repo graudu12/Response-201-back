@@ -5,21 +5,55 @@ import {
   getAllRecipes,
   getRecipeById,
   deleteOwnRecipe,
+  getMyRecipes,
+  getFavoriteRecipes,
 } from '../services/recipes.js';
 import { UserCollection } from '../db/models/user.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 
+export const getFavoriteRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const { id } = req.user;
+
+  const favoriteRecipes = await getFavoriteRecipes({ page, perPage, sortBy, sortOrder, id });
+
+  res.status(200).json({
+    status: 200,
+    message: `Favorite recipes found.`,
+    data: favoriteRecipes,
+  });
+};
+
+export const getMyRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+  const { id } = req.user;
+
+  const myRecipes = await getMyRecipes({ page, perPage, sortBy, sortOrder, id });
+
+  res.status(200).json({
+    status: 200,
+    message: `Your recipes have been successfully found!`,
+    data: myRecipes,
+  });
+};
+
 export const getAllRecipesController = async (req, res) => {
   const userId = req.user?.id; // если пользователь авторизован
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
-  const filter = parseFilterParams(req.query);
+  const filter = await parseFilterParams(req.query);
 
-
-  const { recipes, ...paginationData } = await getAllRecipes({ page, perPage, sortBy, sortOrder, filter });
-
+  const { recipes, ...paginationData } = await getAllRecipes({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    filter,
+  });
 
   let favoriteRecipeIds = [];
   if (userId) {
@@ -28,7 +62,6 @@ export const getAllRecipesController = async (req, res) => {
     );
     favoriteRecipeIds = user?.favoriteRecipes.map((id) => id.toString()) || [];
   }
-
   const enrichedRecipes = recipes.map((recipe) => ({
     ...recipe.toObject(),
     isFavorite: favoriteRecipeIds.includes(recipe._id.toString()),
@@ -37,13 +70,14 @@ export const getAllRecipesController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully found recipes!',
-    data: { enrichedRecipes, ...paginationData }
+    data: { enrichedRecipes, ...paginationData },
   });
 };
 
-
 export const createRecipesController = async (req, res) => {
-  const recipe = await createRecipes(req.body);
+  const { id } = req.user;
+  const recipeData = { ...req.body, owner: id };
+  const recipe = await createRecipes(recipeData);
 
   res.status(200).json({
     status: 200,
@@ -88,7 +122,7 @@ export const addRecipeToFavoritesController = async (req, res, next) => {
 
 export const deleteOwnRecipeController = async (req, res) => {
   const { recipeId } = req.params;
-  const userId = req.user._id;
+  const userId = req.user.id;
 
   const result = await deleteOwnRecipe(recipeId, userId);
 

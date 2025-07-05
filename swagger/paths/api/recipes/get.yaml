@@ -1,1 +1,78 @@
-[]
+tags:
+  - Recipes
+summary: Get all recipes
+operationId: getAllRecipes
+description: A list of recipes with pagination, sorting, and filtering by ingredient and category.
+security: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+      example: 1
+    description: Page number
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 10
+    description: Number of recipes per page
+  - in: query
+    name: sortBy
+    schema:
+      type: string
+      example: nameRecipe
+    description: Field to sort by
+  - in: query
+    name: sortOrder
+    schema:
+      type: string
+      enum: [asc, desc]
+    description: Sorting order
+  - in: query
+    name: ingredient
+    schema:
+      type: string
+    description: Filter recipes by ingredient ID
+  - in: query
+    name: category
+    schema:
+      type: string
+    description: Filter recipes by category
+responses:
+  "200":
+    description: Successfully found recipes
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found recipes!
+            data:
+              type: object
+              properties:
+                enrichedRecipes:
+                  type: array
+                  items:
+                    $ref: ../../../components/schemas/recipeWithFavorite.yaml
+                totalPages:
+                  type: integer
+                  example: 5
+                currentPage:
+                  type: integer
+                  example: 2
+                perPage:
+                  type: integer
+                  example: 10
+                totalItems:
+                  type: integer
+                  example: 50
+  "401":
+    $ref: ../../../components/responses/401.yaml
+  "500":
+    $ref: ../../../components/responses/500.yaml
