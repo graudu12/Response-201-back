@@ -17,14 +17,19 @@ requestBody:
           name:
             description: "Users name"
             type: string
+            minLength: 3
+            maxLength: 30
             example: "John Doe"
           email:
             description: "Users valid email"
             type: string
+            format: email
             example: "john_doe@email.com"
           password:
             description: "Users password"
             type: string
+            minLength: 10
+            maxLength: 30
             example: "fdse235!@"
 responses:
   "201":
