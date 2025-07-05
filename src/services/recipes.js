@@ -3,14 +3,44 @@ import { UserCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-export const getFavoriteRecipes = async (id) => {
-  const user = await UserCollection.findById(id).populate("favoriteRecipes");
-  return user.favoriteRecipes;
+export const getFavoriteRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => {
+  let skip = (page - 1) * perPage;
+
+  const userAllRecipes = await UserCollection.findById(id).populate("favoriteRecipes");
+
+  const recipesCount = userAllRecipes.favoriteRecipes.length;
+
+  const userPaginationRecipe = await UserCollection.findById(id).populate({
+    path: "favoriteRecipes",
+    options: {
+      sort: { [sortBy]: sortOrder },
+      skip,
+      limit: perPage,
+    }
+  });
+  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+
+  return {
+    recipes: userPaginationRecipe.favoriteRecipes,
+    pagination: paginationData
+  };
 };
 
-export const getMyRecipes = async (id) => {
-  const myRecipes = await RecipesCollection.find({ owner: id });
-  return myRecipes;
+
+
+export const getMyRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => {
+  let skip = (page - 1) * perPage;
+
+  const recipesCount = await RecipesCollection.countDocuments({ owner: id });
+
+  const paginationRecipes = await RecipesCollection.find({ owner: id }).skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).exec();
+
+  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+
+  return {
+    recipes: paginationRecipes,
+    pagination: paginationData,
+  };
 };
 
 export const getRecipeById = async (recipeId) => {
@@ -44,6 +74,7 @@ export const getAllRecipes = async ({
     .skip(skip)
     .limit(perPage)
     .sort({ [sortBy]: sortOrder })
+    .populate("ingredients.id")
     .exec();
   const paginationData = calculatePaginationData(recipesCount, perPage, page);
   return {

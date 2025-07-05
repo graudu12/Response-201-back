@@ -21,7 +21,7 @@ const recipeSchema = new Schema(
       type: String,
     },
     recipeDescription: {
-      type: [String],
+      type: String,
       required: true,
     },
     instructions: {
@@ -31,7 +31,7 @@ const recipeSchema = new Schema(
     ingredients: [
       {
         id: {
-          type: String,
+          type: Schema.Types.ObjectId,
           ref: 'ingredient',
           required: true,
         },
@@ -46,7 +46,7 @@ const recipeSchema = new Schema(
       required: true,
     },
     calories: {
-      type: Number,
+      type: String,
       required: true,
     },
     cookingTime: {
