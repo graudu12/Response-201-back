@@ -1,13 +1,39 @@
 tags:
   - Recipes
-summary: Get my recipes
-operationId: getMyRecipes
-description: Returns recipes created by the authenticated user.
+summary: Get user's favorite recipes
+operationId: getFavoriteRecipes
+description: Returns recipes marked as favorite by the authenticated user.
 security:
   - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+      example: 1
+    description: Page number
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 10
+    description: Number of recipes per page
+  - in: query
+    name: sortBy
+    schema:
+      type: string
+      enum: [nameRecipe, cookingTime, calories, createdAt]
+      example: nameRecipe
+    description: Field to sort by
+  - in: query
+    name: sortOrder
+    schema:
+      type: string
+      enum: [asc, desc]
+    description: Sorting order
 responses:
   "200":
-    description: Successfully found user's recipes
+    description: Favorite recipes found
     content:
       application/json:
         schema:
@@ -22,7 +48,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Your recipes have been successfully found!
+              example: Favorite recipes found.
             data:
               type: object
               required:
@@ -35,6 +61,13 @@ responses:
                     $ref: ../../../../components/schemas/recipe.yaml
                 pagination:
                   type: object
+                  required:
+                    - page
+                    - perPage
+                    - totalItems
+                    - totalPages
+                    - hasNextPage
+                    - hasPreviousPage
                   properties:
                     page:
                       type: integer
@@ -55,4 +88,6 @@ responses:
                       type: boolean
                       example: false
   401:
-                        $ref: ../../../../components/responses/401.yaml
+    $ref: ../../../../components/responses/401.yaml
+  404:
+    $ref: ../../../../components/responses/404.yaml
