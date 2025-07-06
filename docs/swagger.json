@@ -27,7 +27,7 @@
     {
       "name": "User",
       "description": "User data."
-    },
+    }
     {
       "name": "Ingredients",
       "description": "Operations to manage ingredients."
@@ -36,7 +36,9 @@
   "paths": {
     "/api/recipes": {
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get all recipes",
         "operationId": "getAllRecipes",
         "description": "A list of recipes with pagination, sorting, and filtering by ingredient and category.",
@@ -74,7 +76,10 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": ["asc", "desc"]
+              "enum": [
+                "asc",
+                "desc"
+              ]
             },
             "description": "Sorting order"
           },
@@ -152,7 +157,9 @@
         }
       },
       "post": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Create a new recipe",
         "operationId": "createRecipes",
         "description": "Creates a recipe and assigns the authenticated user as the owner.",
@@ -191,7 +198,10 @@
                     "items": {
                       "type": "string"
                     },
-                    "example": ["Fresh and tasty", "Easy to prepare"]
+                    "example": [
+                      "Fresh and tasty",
+                      "Easy to prepare"
+                    ]
                   },
                   "instructions": {
                     "type": "string",
@@ -201,7 +211,10 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": ["id", "measure"],
+                      "required": [
+                        "id",
+                        "measure"
+                      ],
                       "properties": {
                         "id": {
                           "type": "string",
@@ -263,7 +276,9 @@
     },
     "/api/recipes/myRecipes": {
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get my recipes",
         "operationId": "getMyRecipes",
         "description": "Returns recipes created by the authenticated user.",
@@ -310,7 +325,9 @@
     },
     "/api/recipes/favorites": {
       "patch": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get favorite recipes",
         "operationId": "getFavoriteRecipes",
         "description": "Returns recipes marked as favorite by the authenticated user.",
@@ -357,7 +374,9 @@
     },
     "/api/recipes/{recipeId}": {
       "delete": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Delete my recipe",
         "operationId": "deleteOwnRecipe",
         "description": "Deletes a recipe if it was created by the authenticated user. Also removes it from all users' favorites.",
@@ -418,7 +437,9 @@
         }
       },
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get recipe by id",
         "operationId": "getRecipeById",
         "description": "Returns recipes by id.",
@@ -467,7 +488,9 @@
     },
     "/api/recipes/{recipeId}/favorites": {
       "patch": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Add a recipe to user's favorites",
         "operationId": "addFavoriteRecipe",
         "description": "Add a recipe to user's favorites",
@@ -513,7 +536,9 @@
         }
       },
       "delete": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Remove a recipe from favorites",
         "operationId": "deleteRecipeFromFavorites",
         "description": "Removes a recipe from the authenticated user's list of favorite recipes.",
@@ -579,7 +604,9 @@
     },
     "/api/ingredients": {
       "get": {
-        "tags": ["Ingredients"],
+        "tags": [
+          "Ingredients"
+        ],
         "summary": "Get all available ingredients",
         "operationId": "getAllIngredients",
         "description": "Get all ingredients",
@@ -610,7 +637,11 @@
                 },
                 "example": {
                   "status": 200,
-                  "data": ["Squid", "Cabbage", "Baking Powder"]
+                  "data": [
+                    "Squid",
+                    "Cabbage",
+                    "Baking Powder"
+                  ]
                 }
               }
             }
@@ -626,7 +657,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user",
@@ -636,7 +669,10 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "description": "Users email that was used for registration",
@@ -660,7 +696,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -685,7 +725,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -706,7 +749,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -729,7 +775,9 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register a user",
         "operationId": "RegisterUser",
         "description": "Register a user",
@@ -739,7 +787,11 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["name", "email", "password"],
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "name": {
                     "description": "Users name",
@@ -768,7 +820,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -789,7 +845,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -812,7 +871,9 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout a user",
         "operationId": "LogoutUser",
         "description": "Logout a user",
@@ -828,7 +889,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status"],
+                  "required": [
+                    "status"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -845,7 +908,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -871,7 +937,9 @@
     },
     "/api/users/current": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Get current user",
         "operationId": "userCurrent",
         "description": "Get current user info",
@@ -947,13 +1015,20 @@
             "items": {
               "type": "string"
             },
-            "example": ["Chop cabbage", "Boil water", "Cook for 30 minutes"]
+            "example": [
+              "Chop cabbage",
+              "Boil water",
+              "Cook for 30 minutes"
+            ]
           },
           "ingredients": {
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["name", "measure"],
+              "required": [
+                "name",
+                "measure"
+              ],
               "properties": {
                 "name": {
                   "type": "string",
@@ -1005,7 +1080,9 @@
         "properties": {
           "user": {
             "type": "object",
-            "required": ["accessToken"],
+            "required": [
+              "accessToken"
+            ],
             "properties": {
               "accessToken": {
                 "type": "string",
@@ -1023,7 +1100,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1035,7 +1116,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1074,7 +1157,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1095,7 +1181,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1110,6 +1199,7 @@
           }
         }
       }
+<<<<<<< HEAD
     },
     "schemas": {
       "LoginResponseData": {
@@ -1117,7 +1207,9 @@
         "properties": {
           "user": {
             "type": "object",
-            "required": ["accessToken"],
+            "required": [
+              "accessToken"
+            ],
             "properties": {
               "accessToken": {
                 "type": "string",
@@ -1155,6 +1247,8 @@
           }
         }
       }
+=======
+>>>>>>> origin
     }
   }
 }
