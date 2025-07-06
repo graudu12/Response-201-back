@@ -7,10 +7,12 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is the documentation for the Recipes app.
 tags:
-  - name: Recipes
+  - name : Recipes
     description: Operations about users.
   - name: Auth
     description: Auth operations.
+  - name: User
+    description: User data.
   - name: Ingredients
     description: Operations to manage ingredients.
   - name: Categories
@@ -64,6 +66,9 @@ paths:
   /api/auth/logout:
     post:
       $ref: ../swagger/paths/api/auth/logout/post.yaml
+  /api/users/current:    
+    get: 
+      $ref: ../swagger/paths/api/users/get.yaml
 
 components:
   securitySchemes:

@@ -7,6 +7,7 @@ import {
   addRecipeToFavoritesController,
   getMyRecipesController,
   getFavoriteRecipesController,
+  deleteOwnRecipeController,
 } from '../controllers/recipes.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
@@ -41,6 +42,6 @@ router.delete(
   '/:recipeId/ownRecipe',
   auth,
   isValidId,
-  ctrlWrapper(deleteRecipeToFavoritesController),
+  ctrlWrapper(deleteOwnRecipeController),
 );
 export default router;
