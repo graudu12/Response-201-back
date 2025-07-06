@@ -23,16 +23,20 @@ requestBody:
           nameRecipe:
             type: string
             example: Greek Salad
+            description: The name of the recipe
           dishPhoto:
             type: string
             format: uri
             example: https://example.com/photos/salad.jpg
+            description: URL of the dish photo (optional)
           recipeDescription:
             type: string
             example: Fresh and tasty salad
+            description: Short description of the recipe
           instructions:
             type: string
             example: "Chop vegetables, mix and serve."
+            description: Step-by-step instructions
           ingredients:
             type: array
             items:
@@ -44,18 +48,23 @@ requestBody:
                 id:
                   type: string
                   example: "64e2abc9f6a0123456789012"
+                  description: Ingredient ID
                 measure:
                   type: string
                   example: "100g"
+                  description: Amount or measure of the ingredient
           recipeCategory:
             type: string
-            example: "Salads"
+            example: Salads
+            description: Category of the recipe
           calories:
-            type: number
-            example: 250
+            type: string
+            example: "250"
+            description: Number of calories in the dish
           cookingTime:
             type: string
             example: "15 min"
+            description: Estimated cooking time
 responses:
   "201":
     description: Recipe successfully created

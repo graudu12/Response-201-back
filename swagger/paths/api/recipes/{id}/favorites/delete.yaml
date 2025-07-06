@@ -37,8 +37,8 @@ responses:
                   type: array
                   items:
                     type: string
-                    example:
-                      - "6462a8f74c3d0ddd28897fb8"
+                  example:
+                    - "6462a8f74c3d0ddd28897fb8"
   401:
     $ref: ../../../../../components/responses/401.yaml
   404:

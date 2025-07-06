@@ -6,7 +6,7 @@ description: "Register a user"
 security: []
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         required:
@@ -49,6 +49,8 @@ responses:
             message:
               type: string
               example: Successfully registered a user!
+            data:
+              $ref: "../../../../components/schemas/user.yaml"
   "400":
     description: Bad request
     content:
@@ -65,5 +67,21 @@ responses:
             message:
               type: string
               example: Bad request
+  "409":
+    description: Email already in use
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: Email in use
   "500":
     $ref: "../../../../components/responses/500.yaml"
