@@ -2,6 +2,7 @@ import { RecipesCollection } from '../db/models/recipe.js';
 import { UserCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+import { populate } from 'dotenv';
 
 export const getFavoriteRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => {
   let skip = (page - 1) * perPage;
@@ -33,7 +34,7 @@ export const getMyRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => 
 
   const recipesCount = await RecipesCollection.countDocuments({ owner: id });
 
-  const paginationRecipes = await RecipesCollection.find({ owner: id }).skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).exec();
+  const paginationRecipes = await RecipesCollection.find({ owner: id }).skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).populate("ingredients.id").exec();
 
   const paginationData = calculatePaginationData(recipesCount, perPage, page);
 
