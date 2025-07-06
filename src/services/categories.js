@@ -1,6 +1,6 @@
 import { CategoryCollection } from "../db/models/recipe.js";
 
 export const getAllCategories = async () => {
-    const categories = await CategoryCollection.find();
+    const categories = CategoryCollection.find();
     return categories;
 };
