@@ -25,6 +25,10 @@
       "description": "Auth operations."
     },
     {
+      "name": "User",
+      "description": "User data."
+    }
+    {
       "name": "Ingredients",
       "description": "Operations to manage ingredients."
     }
@@ -930,6 +934,52 @@
           }
         }
       }
+    },
+    "/api/users/current": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get current user",
+        "operationId": "userCurrent",
+        "description": "Get current user info",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get info about user by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found info about user"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1149,6 +1199,56 @@
           }
         }
       }
+<<<<<<< HEAD
+    },
+    "schemas": {
+      "LoginResponseData": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "required": [
+              "accessToken"
+            ],
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              }
+            }
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "68655a534d78a90790563b36"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of user",
+            "example": "Dave Norton"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email of user",
+            "example": "mark.davon@gmail.com"
+          },
+          "favoriteRecipes": {
+            "type": "array",
+            "description": "favorite recipes",
+            "items": {
+              "type": "string",
+              "example": "64a1234567890abcdef99999"
+            }
+          }
+        }
+      }
+=======
+>>>>>>> origin
     }
   }
 }
