@@ -21,6 +21,7 @@ parameters:
     name: sortBy
     schema:
       type: string
+      enum: [nameRecipe, cookingTime, calories]
       example: nameRecipe
     description: Field to sort by
   - in: query
@@ -46,6 +47,10 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer

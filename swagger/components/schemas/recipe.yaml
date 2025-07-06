@@ -1,11 +1,12 @@
 type: object
 required:
   - nameRecipe
-  - recipeDescription
+  - instructions
   - ingredients
   - recipeCategory
-  - calories
   - cookingTime
+  - recipeDescription
+  - owner
 properties:
   nameRecipe:
     type: string
@@ -15,33 +16,28 @@ properties:
     format: url
     example: "http://example.com/photo.jpg"
   recipeDescription:
-    type: array
-    items:
-      type: string
-    example:
-      - "Chop cabbage"
-      - "Boil water"
-      - "Cook for 30 minutes"
+    type: string
+    example: "A classic British cake made with almond sponge cake..."
+  instructions:
+    type: string
+    example: "Preheat oven to 350° F. Spray a 9x13-inch baking pan..."
   ingredients:
     type: array
     items:
       type: object
       required:
-        - name
+        - id
         - measure
       properties:
-        name:
+        id:
           type: string
-          example: "Cabbage"
+          example: "6462a8f74c3d0ddd28897fbf"
         measure:
           type: string
           example: "200g"
   recipeCategory:
     type: string
     example: "Lamb"
-  calories:
-    type: number
-    example: 250
   cookingTime:
     type: string
     example: "30"

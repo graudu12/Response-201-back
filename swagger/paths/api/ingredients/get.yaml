@@ -11,24 +11,18 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - ingredients
           properties:
-            status:
-              type: integer
-              example: 200
-            message:
-              type: string
-              example: Successfully found ingredients
-            data:
+            ingredients:
               type: array
               items:
                 type: string
-        example:
-          status: 200
-
-          data:
-            - Squid
-            - Cabbage
-            - Baking Powder
+          example:
+            ingredients:
+              - Squid
+              - Cabbage
+              - Baking Powder
   "401":
     $ref: ../../../components/responses/401.yaml
   "500":

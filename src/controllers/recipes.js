@@ -18,7 +18,13 @@ export const getFavoriteRecipesController = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const { id } = req.user;
 
-  const favoriteRecipes = await getFavoriteRecipes({ page, perPage, sortBy, sortOrder, id });
+  const favoriteRecipes = await getFavoriteRecipes({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    id,
+  });
 
   res.status(200).json({
     status: 200,
@@ -32,7 +38,13 @@ export const getMyRecipesController = async (req, res) => {
   const { sortBy, sortOrder } = parseSortParams(req.query);
   const { id } = req.user;
 
-  const myRecipes = await getMyRecipes({ page, perPage, sortBy, sortOrder, id });
+  const myRecipes = await getMyRecipes({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+    id,
+  });
 
   res.status(200).json({
     status: 200,
@@ -79,8 +91,8 @@ export const createRecipesController = async (req, res) => {
   const recipeData = { ...req.body, owner: id };
   const recipe = await createRecipes(recipeData);
 
-  res.status(200).json({
-    status: 200,
+  res.status(201).json({
+    status: 201,
     message: 'Successfully create a recipe!',
     data: recipe,
   });

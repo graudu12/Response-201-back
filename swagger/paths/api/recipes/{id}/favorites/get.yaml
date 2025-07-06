@@ -1,6 +1,5 @@
 tags:
   - Recipes
-<<<<<<< HEAD
 summary: Get recipe by id
 operationId: getRecipeById
 description: Returns recipes by id.
@@ -15,16 +14,6 @@ parameters:
 responses:
   200:
     description: Get recipe by recipeId!
-=======
-summary: Get favorite recipes
-operationId: getFavoriteRecipes
-description: Returns recipes marked as favorite by the authenticated user.
-security:
-  - bearerAuth: []
-responses:
-  "200":
-    description: Favorite recipes found
->>>>>>> origin
     content:
       application/json:
         schema:
@@ -35,21 +24,8 @@ responses:
               example: 200
             message:
               type: string
-<<<<<<< HEAD
               example: Successfully found recipe with id 123!
             data:
-              type: object
-              $ref: ../../../../components/schemas/recipe.yaml
+              $ref: ../../../../../components/schemas/recipe.yaml
   404:
-    $ref: ../../../../components/responses/404.yaml
-=======
-              example: Favorite recipes found.
-            data:
-              type: array
-              items:
-                $ref: ../../../../../components/schemas/recipe.yaml
-  "401":
-    $ref: ../../../../../components/responses/401.yaml
-  "500":
-    $ref: ../../../../../components/responses/500.yaml
->>>>>>> origin
+    $ref: ../../../../../components/responses/404.yaml

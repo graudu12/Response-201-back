@@ -8,11 +8,12 @@ security:
 parameters:
   - in: path
     name: recipeId
+    description: ID of the recipe to remove from favorites
     required: true
     schema:
       type: string
 responses:
-  200:
+  "200":
     description: Recipe successfully removed from favorites
     content:
       application/json:
@@ -31,10 +32,13 @@ responses:
               properties:
                 _id:
                   type: string
+                  example: "686427b219cea74e6af7056c"
                 favoriteRecipes:
                   type: array
                   items:
                     type: string
+                    example:
+                      - "6462a8f74c3d0ddd28897fb8"
   401:
     $ref: ../../../../../components/responses/401.yaml
   404:

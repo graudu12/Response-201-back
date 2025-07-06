@@ -12,7 +12,7 @@
   "servers": [
     {
       "url": "https://response-201-back.onrender.com",
-      "description": "Local development server"
+      "description": "development server"
     }
   ],
   "tags": [
@@ -27,18 +27,60 @@
     {
       "name": "User",
       "description": "User data."
-    }
+    },
     {
       "name": "Ingredients",
       "description": "Operations to manage ingredients."
+    },
+    {
+      "name": "Categories",
+      "description": "Operations to manage categories."
     }
   ],
   "paths": {
+    "/api/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "operationId": "getAllCategories",
+        "description": "Returns a list of all recipe categories.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved list of categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "64ab1234abcd5678ef901234"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "Desserts"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
     "/api/recipes": {
       "get": {
-        "tags": [
-          "Recipes"
-        ],
+        "tags": ["Recipes"],
         "summary": "Get all recipes",
         "operationId": "getAllRecipes",
         "description": "A list of recipes with pagination, sorting, and filtering by ingredient and category.",
@@ -67,6 +109,7 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
+              "enum": ["nameRecipe", "cookingTime", "calories"],
               "example": "nameRecipe"
             },
             "description": "Field to sort by"
@@ -76,10 +119,7 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "description": "Sorting order"
           },
@@ -107,6 +147,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -157,9 +198,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Recipes"
-        ],
+        "tags": ["Recipes"],
         "summary": "Create a new recipe",
         "operationId": "createRecipes",
         "description": "Creates a recipe and assigns the authenticated user as the owner.",
@@ -194,14 +233,8 @@
                     "example": "https://example.com/photos/salad.jpg"
                   },
                   "recipeDescription": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "Fresh and tasty",
-                      "Easy to prepare"
-                    ]
+                    "type": "string",
+                    "example": "Fresh and tasty salad"
                   },
                   "instructions": {
                     "type": "string",
@@ -211,10 +244,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": [
-                        "id",
-                        "measure"
-                      ],
+                      "required": ["id", "measure"],
                       "properties": {
                         "id": {
                           "type": "string",
@@ -245,7 +275,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Recipe successfully created",
             "content": {
               "application/json": {
@@ -254,7 +284,7 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 201
                     },
                     "message": {
                       "type": "string",
@@ -276,9 +306,7 @@
     },
     "/api/recipes/myRecipes": {
       "get": {
-        "tags": [
-          "Recipes"
-        ],
+        "tags": ["Recipes"],
         "summary": "Get my recipes",
         "operationId": "getMyRecipes",
         "description": "Returns recipes created by the authenticated user.",
@@ -294,6 +322,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -304,9 +333,171 @@
                       "example": "Your recipes have been successfully found!"
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/recipe"
+                      "type": "object",
+                      "required": ["recipes", "pagination"],
+                      "properties": {
+                        "recipes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/recipe"
+                          }
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "perPage": {
+                              "type": "integer",
+                              "example": 10
+                            },
+                            "totalItems": {
+                              "type": "integer",
+                              "example": 4
+                            },
+                            "totalPages": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "hasNextPage": {
+                              "type": "boolean",
+                              "example": false
+                            },
+                            "hasPreviousPage": {
+                              "type": "boolean",
+                              "example": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
+    },
+    "/api/recipes/favorites": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get user's favorite recipes",
+        "operationId": "getFavoriteRecipes",
+        "description": "Returns recipes marked as favorite by the authenticated user.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "example": 1
+            },
+            "description": "Page number"
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 10
+            },
+            "description": "Number of recipes per page"
+          },
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string",
+              "enum": ["nameRecipe", "cookingTime", "calories", "createdAt"],
+              "example": "nameRecipe"
+            },
+            "description": "Field to sort by"
+          },
+          {
+            "in": "query",
+            "name": "sortOrder",
+            "schema": {
+              "type": "string",
+              "enum": ["asc", "desc"]
+            },
+            "description": "Sorting order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Favorite recipes found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status", "message", "data"],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Favorite recipes found."
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": ["recipes", "pagination"],
+                      "properties": {
+                        "recipes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/recipe"
+                          }
+                        },
+                        "pagination": {
+                          "type": "object",
+                          "required": [
+                            "page",
+                            "perPage",
+                            "totalItems",
+                            "totalPages",
+                            "hasNextPage",
+                            "hasPreviousPage"
+                          ],
+                          "properties": {
+                            "page": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "perPage": {
+                              "type": "integer",
+                              "example": 10
+                            },
+                            "totalItems": {
+                              "type": "integer",
+                              "example": 4
+                            },
+                            "totalPages": {
+                              "type": "integer",
+                              "example": 1
+                            },
+                            "hasNextPage": {
+                              "type": "boolean",
+                              "example": false
+                            },
+                            "hasPreviousPage": {
+                              "type": "boolean",
+                              "example": false
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -317,28 +508,83 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
-          "500": {
-            "$ref": "#/components/responses/500"
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
     },
-    "/api/recipes/favorites": {
+    "/api/recipes/{recipeId}/favorites": {
       "patch": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Get favorite recipes",
-        "operationId": "getFavoriteRecipes",
-        "description": "Returns recipes marked as favorite by the authenticated user.",
+        "tags": ["Recipes"],
+        "summary": "Add a recipe to user's favorites",
+        "operationId": "addFavoriteRecipe",
+        "description": "Add a recipe to user's favorites",
         "security": [
           {
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6462a8f74c3d0ddd28897fbf"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Favorite recipes found",
+            "description": "Recipe successfully added to favorites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Recipe added to favorites"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Recipes"],
+        "summary": "Remove a recipe from favorites",
+        "operationId": "deleteRecipeFromFavorites",
+        "description": "Removes a recipe from the authenticated user's list of favorite recipes.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "description": "ID of the recipe to remove from favorites",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe successfully removed from favorites",
             "content": {
               "application/json": {
                 "schema": {
@@ -350,12 +596,23 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Favorite recipes found."
+                      "example": "The recipe has been successfully removed from favorites."
                     },
                     "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/recipe"
+                      "type": "object",
+                      "description": "Updated user data",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "686427b219cea74e6af7056c"
+                        },
+                        "favoriteRecipes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": ["6462a8f74c3d0ddd28897fb8"]
+                          }
+                        }
                       }
                     }
                   }
@@ -366,17 +623,15 @@
           "401": {
             "$ref": "#/components/responses/401"
           },
-          "500": {
-            "$ref": "#/components/responses/500"
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
       }
     },
     "/api/recipes/{recipeId}": {
       "delete": {
-        "tags": [
-          "Recipes"
-        ],
+        "tags": ["Recipes"],
         "summary": "Delete my recipe",
         "operationId": "deleteOwnRecipe",
         "description": "Deletes a recipe if it was created by the authenticated user. Also removes it from all users' favorites.",
@@ -417,6 +672,10 @@
                         "message": {
                           "type": "string",
                           "example": "Recipe deleted successfully and removed from all favorites"
+                        },
+                        "recipeId": {
+                          "type": "string",
+                          "example": "6462a8f74c3d0ddd28897fb8"
                         }
                       }
                     }
@@ -437,9 +696,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Recipes"
-        ],
+        "tags": ["Recipes"],
         "summary": "Get recipe by id",
         "operationId": "getRecipeById",
         "description": "Returns recipes by id.",
@@ -486,127 +743,9 @@
         }
       }
     },
-    "/api/recipes/{recipeId}/favorites": {
-      "patch": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Add a recipe to user's favorites",
-        "operationId": "addFavoriteRecipe",
-        "description": "Add a recipe to user's favorites",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "recipeId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "6462a8f74c3d0ddd28897fbf"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Recipe successfully added to favorites",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Recipe added to favorites"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Remove a recipe from favorites",
-        "operationId": "deleteRecipeFromFavorites",
-        "description": "Removes a recipe from the authenticated user's list of favorite recipes.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "recipeId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Recipe successfully removed from favorites",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "The recipe has been successfully removed from favorites."
-                    },
-                    "data": {
-                      "type": "object",
-                      "description": "Updated user data",
-                      "properties": {
-                        "_id": {
-                          "type": "string"
-                        },
-                        "favoriteRecipes": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          }
-        }
-      }
-    },
     "/api/ingredients": {
       "get": {
-        "tags": [
-          "Ingredients"
-        ],
+        "tags": ["Ingredients"],
         "summary": "Get all available ingredients",
         "operationId": "getAllIngredients",
         "description": "Get all ingredients",
@@ -618,30 +757,18 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "required": ["ingredients"],
                   "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found ingredients"
-                    },
-                    "data": {
+                    "ingredients": {
                       "type": "array",
                       "items": {
                         "type": "string"
                       }
                     }
+                  },
+                  "example": {
+                    "ingredients": ["Squid", "Cabbage", "Baking Powder"]
                   }
-                },
-                "example": {
-                  "status": 200,
-                  "data": [
-                    "Squid",
-                    "Cabbage",
-                    "Baking Powder"
-                  ]
                 }
               }
             }
@@ -657,9 +784,7 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user",
@@ -669,10 +794,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "email",
-                  "password"
-                ],
+                "required": ["email", "password"],
                 "properties": {
                   "email": {
                     "description": "Users email that was used for registration",
@@ -696,11 +818,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -725,10 +843,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -749,10 +864,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -775,9 +887,7 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register a user",
         "operationId": "RegisterUser",
         "description": "Register a user",
@@ -787,11 +897,7 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "name",
-                  "email",
-                  "password"
-                ],
+                "required": ["name", "email", "password"],
                 "properties": {
                   "name": {
                     "description": "Users name",
@@ -820,11 +926,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
+                  "required": ["status", "message", "data"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -845,10 +947,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -871,9 +970,7 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Logout a user",
         "operationId": "LogoutUser",
         "description": "Logout a user",
@@ -889,9 +986,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status"
-                  ],
+                  "required": ["status"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -908,10 +1003,7 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": [
-                    "status",
-                    "message"
-                  ],
+                  "required": ["status", "message"],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -931,52 +1023,6 @@
           },
           "500": {
             "$ref": "#/components/responses/500"
-          }
-        }
-      }
-    },
-    "/api/users/current": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get current user",
-        "operationId": "userCurrent",
-        "description": "Get current user info",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get info about user by id",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found info about user"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/user"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
           }
         }
       }
@@ -1064,33 +1110,18 @@
           {
             "$ref": "#/components/schemas/recipe"
           },
-          {
-            "type": "object",
-            "properties": {
-              "isFavorite": {
-                "type": "boolean",
-                "example": true
-              }
-            }
-          }
-        ]
-      },
-      "LoginResponseData": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "type": "object",
-            "required": [
-              "accessToken"
-            ],
-            "properties": {
-              "accessToken": {
-                "type": "string",
-                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-              }
-            }
+          "404": {
+            "$ref": "#/components/responses/404"
           }
         }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
       }
     },
     "responses": {
@@ -1100,11 +1131,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message",
-                "data"
-              ],
+              "required": ["status", "message", "data"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1116,9 +1143,7 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": [
-                    "message"
-                  ],
+                  "required": ["message"],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1157,10 +1182,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
+              "required": ["status", "message"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1181,10 +1203,7 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": [
-                "status",
-                "message"
-              ],
+              "required": ["status", "message"],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1199,7 +1218,6 @@
           }
         }
       }
-<<<<<<< HEAD
     },
     "schemas": {
       "LoginResponseData": {
@@ -1246,9 +1264,84 @@
             }
           }
         }
+      },
+      "recipe": {
+        "type": "object",
+        "required": [
+          "nameRecipe",
+          "instructions",
+          "ingredients",
+          "recipeCategory",
+          "cookingTime",
+          "recipeDescription",
+          "owner"
+        ],
+        "properties": {
+          "nameRecipe": {
+            "type": "string",
+            "example": "Cabbage Soup"
+          },
+          "dishPhoto": {
+            "type": "string",
+            "format": "url",
+            "example": "http://example.com/photo.jpg"
+          },
+          "recipeDescription": {
+            "type": "string",
+            "example": "A classic British cake made with almond sponge cake..."
+          },
+          "instructions": {
+            "type": "string",
+            "example": "Preheat oven to 350° F. Spray a 9x13-inch baking pan..."
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "measure"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "6462a8f74c3d0ddd28897fbf"
+                },
+                "measure": {
+                  "type": "string",
+                  "example": "200g"
+                }
+              }
+            }
+          },
+          "recipeCategory": {
+            "type": "string",
+            "example": "Lamb"
+          },
+          "cookingTime": {
+            "type": "string",
+            "example": "30"
+          },
+          "owner": {
+            "type": "string",
+            "example": "5f8f8c44c9e77a001a1b2c3d"
+          }
+        }
+      },
+      "recipeWithFavorite": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/recipe"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "isFavorite": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          }
+
       }
-=======
->>>>>>> origin
     }
-  }
-}
