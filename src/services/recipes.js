@@ -2,7 +2,7 @@ import { RecipesCollection } from '../db/models/recipe.js';
 import { UserCollection } from '../db/models/user.js';
 import createHttpError from 'http-errors';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
-import { populate } from 'dotenv';
+
 
 export const getFavoriteRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => {
   let skip = (page - 1) * perPage;
