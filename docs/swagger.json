@@ -40,7 +40,9 @@
   "paths": {
     "/api/categories": {
       "get": {
-        "tags": ["Categories"],
+        "tags": [
+          "Categories"
+        ],
         "summary": "Get all categories",
         "operationId": "getAllCategories",
         "description": "Returns a list of all recipe categories.",
@@ -80,7 +82,9 @@
     },
     "/api/recipes": {
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get all recipes",
         "operationId": "getAllRecipes",
         "description": "A list of recipes with pagination, sorting, and filtering by ingredient and category.",
@@ -109,7 +113,11 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
-              "enum": ["nameRecipe", "cookingTime", "calories"],
+              "enum": [
+                "nameRecipe",
+                "cookingTime",
+                "calories"
+              ],
               "example": "nameRecipe"
             },
             "description": "Field to sort by"
@@ -119,7 +127,10 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": ["asc", "desc"]
+              "enum": [
+                "asc",
+                "desc"
+              ]
             },
             "description": "Sorting order"
           },
@@ -147,7 +158,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -198,7 +213,9 @@
         }
       },
       "post": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Create a new recipe",
         "operationId": "createRecipes",
         "description": "Creates a recipe and assigns the authenticated user as the owner.",
@@ -244,7 +261,10 @@
                     "type": "array",
                     "items": {
                       "type": "object",
-                      "required": ["id", "measure"],
+                      "required": [
+                        "id",
+                        "measure"
+                      ],
                       "properties": {
                         "id": {
                           "type": "string",
@@ -306,7 +326,9 @@
     },
     "/api/recipes/myRecipes": {
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get my recipes",
         "operationId": "getMyRecipes",
         "description": "Returns recipes created by the authenticated user.",
@@ -322,7 +344,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -334,7 +360,10 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["recipes", "pagination"],
+                      "required": [
+                        "recipes",
+                        "pagination"
+                      ],
                       "properties": {
                         "recipes": {
                           "type": "array",
@@ -386,7 +415,9 @@
     },
     "/api/recipes/favorites": {
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get user's favorite recipes",
         "operationId": "getFavoriteRecipes",
         "description": "Returns recipes marked as favorite by the authenticated user.",
@@ -419,7 +450,12 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
-              "enum": ["nameRecipe", "cookingTime", "calories", "createdAt"],
+              "enum": [
+                "nameRecipe",
+                "cookingTime",
+                "calories",
+                "createdAt"
+              ],
               "example": "nameRecipe"
             },
             "description": "Field to sort by"
@@ -429,7 +465,10 @@
             "name": "sortOrder",
             "schema": {
               "type": "string",
-              "enum": ["asc", "desc"]
+              "enum": [
+                "asc",
+                "desc"
+              ]
             },
             "description": "Sorting order"
           }
@@ -441,7 +480,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -453,7 +496,10 @@
                     },
                     "data": {
                       "type": "object",
-                      "required": ["recipes", "pagination"],
+                      "required": [
+                        "recipes",
+                        "pagination"
+                      ],
                       "properties": {
                         "recipes": {
                           "type": "array",
@@ -516,7 +562,9 @@
     },
     "/api/recipes/{recipeId}/favorites": {
       "patch": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Add a recipe to user's favorites",
         "operationId": "addFavoriteRecipe",
         "description": "Add a recipe to user's favorites",
@@ -562,7 +610,9 @@
         }
       },
       "delete": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Remove a recipe from favorites",
         "operationId": "deleteRecipeFromFavorites",
         "description": "Removes a recipe from the authenticated user's list of favorite recipes.",
@@ -610,7 +660,9 @@
                           "type": "array",
                           "items": {
                             "type": "string",
-                            "example": ["6462a8f74c3d0ddd28897fb8"]
+                            "example": [
+                              "6462a8f74c3d0ddd28897fb8"
+                            ]
                           }
                         }
                       }
@@ -631,7 +683,9 @@
     },
     "/api/recipes/{recipeId}": {
       "delete": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Delete my recipe",
         "operationId": "deleteOwnRecipe",
         "description": "Deletes a recipe if it was created by the authenticated user. Also removes it from all users' favorites.",
@@ -696,7 +750,9 @@
         }
       },
       "get": {
-        "tags": ["Recipes"],
+        "tags": [
+          "Recipes"
+        ],
         "summary": "Get recipe by id",
         "operationId": "getRecipeById",
         "description": "Returns recipes by id.",
@@ -729,7 +785,6 @@
                       "example": "Successfully found recipe with id 123!"
                     },
                     "data": {
-                      "type": "object",
                       "$ref": "#/components/schemas/recipe"
                     }
                   }
@@ -745,7 +800,9 @@
     },
     "/api/ingredients": {
       "get": {
-        "tags": ["Ingredients"],
+        "tags": [
+          "Ingredients"
+        ],
         "summary": "Get all available ingredients",
         "operationId": "getAllIngredients",
         "description": "Get all ingredients",
@@ -757,7 +814,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["ingredients"],
+                  "required": [
+                    "ingredients"
+                  ],
                   "properties": {
                     "ingredients": {
                       "type": "array",
@@ -767,7 +826,11 @@
                     }
                   },
                   "example": {
-                    "ingredients": ["Squid", "Cabbage", "Baking Powder"]
+                    "ingredients": [
+                      "Squid",
+                      "Cabbage",
+                      "Baking Powder"
+                    ]
                   }
                 }
               }
@@ -784,7 +847,9 @@
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Login a user",
         "operationId": "loginUser",
         "description": "Login a user",
@@ -794,16 +859,22 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["email", "password"],
+                "required": [
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "email": {
                     "description": "Users email that was used for registration",
                     "type": "string",
+                    "format": "email",
                     "example": "john_doe@email.com"
                   },
                   "password": {
                     "description": "Users password that was used for registration",
                     "type": "string",
+                    "minLength": 10,
+                    "maxLength": 30,
                     "example": "fdse235!@"
                   }
                 }
@@ -818,7 +889,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -843,7 +918,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -864,7 +942,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -887,7 +968,9 @@
     },
     "/api/auth/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Register a user",
         "operationId": "RegisterUser",
         "description": "Register a user",
@@ -897,21 +980,30 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
-                "required": ["name", "email", "password"],
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
                 "properties": {
                   "name": {
                     "description": "Users name",
                     "type": "string",
+                    "minLength": 3,
+                    "maxLength": 30,
                     "example": "John Doe"
                   },
                   "email": {
                     "description": "Users valid email",
                     "type": "string",
+                    "format": "email",
                     "example": "john_doe@email.com"
                   },
                   "password": {
                     "description": "Users password",
                     "type": "string",
+                    "minLength": 10,
+                    "maxLength": 30,
                     "example": "fdse235!@"
                   }
                 }
@@ -926,7 +1018,11 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -947,7 +1043,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -970,7 +1069,9 @@
     },
     "/api/auth/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Logout a user",
         "operationId": "LogoutUser",
         "description": "Logout a user",
@@ -986,7 +1087,9 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status"],
+                  "required": [
+                    "status"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1003,7 +1106,10 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message"],
+                  "required": [
+                    "status",
+                    "message"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -1026,89 +1132,46 @@
           }
         }
       }
-    }
-  },
-  "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
     },
-    "schemas": {
-      "recipe": {
-        "type": "object",
-        "required": [
-          "nameRecipe",
-          "recipeDescription",
-          "ingredients",
-          "recipeCategory",
-          "calories",
-          "cookingTime"
+    "/api/users/current": {
+      "get": {
+        "tags": [
+          "Users"
         ],
-        "properties": {
-          "nameRecipe": {
-            "type": "string",
-            "example": "Cabbage Soup"
-          },
-          "dishPhoto": {
-            "type": "string",
-            "format": "url",
-            "example": "http://example.com/photo.jpg"
-          },
-          "recipeDescription": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "Chop cabbage",
-              "Boil water",
-              "Cook for 30 minutes"
-            ]
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "name",
-                "measure"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Cabbage"
-                },
-                "measure": {
-                  "type": "string",
-                  "example": "200g"
+        "summary": "Get current user",
+        "operationId": "userCurrent",
+        "description": "Get current user info",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get info about user by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found info about user"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  }
                 }
               }
             }
           },
-          "recipeCategory": {
-            "type": "string",
-            "example": "Lamb"
-          },
-          "calories": {
-            "type": "number",
-            "example": 250
-          },
-          "cookingTime": {
-            "type": "string",
-            "example": "30"
-          },
-          "owner": {
-            "type": "string",
-            "example": "5f8f8c44c9e77a001a1b2c3d"
-          }
-        }
-      },
-      "recipeWithFavorite": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/recipe"
+          "401": {
+            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -1131,7 +1194,11 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1143,7 +1210,9 @@
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
@@ -1182,7 +1251,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1203,7 +1275,10 @@
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message"],
+              "required": [
+                "status",
+                "message"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -1220,51 +1295,6 @@
       }
     },
     "schemas": {
-      "LoginResponseData": {
-        "type": "object",
-        "properties": {
-          "user": {
-            "type": "object",
-            "required": [
-              "accessToken"
-            ],
-            "properties": {
-              "accessToken": {
-                "type": "string",
-                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-              }
-            }
-          }
-        }
-      },
-      "user": {
-        "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string",
-            "example": "68655a534d78a90790563b36"
-          },
-          "name": {
-            "type": "string",
-            "description": "Name of user",
-            "example": "Dave Norton"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "description": "Email of user",
-            "example": "mark.davon@gmail.com"
-          },
-          "favoriteRecipes": {
-            "type": "array",
-            "description": "favorite recipes",
-            "items": {
-              "type": "string",
-              "example": "64a1234567890abcdef99999"
-            }
-          }
-        }
-      },
       "recipe": {
         "type": "object",
         "required": [
@@ -1342,6 +1372,53 @@
               }
             }
           }
-
+        ]
+      },
+      "LoginResponseData": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "required": [
+              "accessToken"
+            ],
+            "properties": {
+              "accessToken": {
+                "type": "string",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+              }
+            }
+          }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "68655a534d78a90790563b36"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of user",
+            "example": "Dave Norton"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Email of user",
+            "example": "mark.davon@gmail.com"
+          },
+          "favoriteRecipes": {
+            "type": "array",
+            "description": "favorite recipes",
+            "items": {
+              "type": "string",
+              "example": "64a1234567890abcdef99999"
+            }
+          }
+        }
       }
     }
+  }
+}

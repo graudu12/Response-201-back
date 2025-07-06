@@ -7,7 +7,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: This is the documentation for the Recipes app.
 tags:
-  - name : Recipes
+  - name: Recipes
     description: Operations about users.
   - name: Auth
     description: Auth operations.
@@ -49,7 +49,7 @@ paths:
     delete:
       $ref: ../swagger/paths/api/recipes/myRecipes/delete.yaml
     get:
-      $ref: ../swagger/paths/api/recipes/{id}/get.yaml
+      $ref: ../swagger/paths/api/recipes/{id}/favorites/get.yaml
 
   /api/ingredients:
     get:
@@ -66,8 +66,8 @@ paths:
   /api/auth/logout:
     post:
       $ref: ../swagger/paths/api/auth/logout/post.yaml
-  /api/users/current:    
-    get: 
+  /api/users/current:
+    get:
       $ref: ../swagger/paths/api/users/get.yaml
 
 components:
