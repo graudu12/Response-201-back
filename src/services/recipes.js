@@ -45,6 +45,9 @@ export const getMyRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => 
 
 export const getRecipeById = async (recipeId) => {
   const recipe = await RecipesCollection.findById(recipeId);
+  if (!recipe) {
+    throw createHttpError(404, 'Recipe not found');
+  }
   return recipe;
 };
 
@@ -94,6 +97,7 @@ export const addRecipeToFavorites = async (userId, recipeId) => {
     { $addToSet: { favoriteRecipes: recipeId } },
     { new: true },
   );
+
   return user;
 };
 
@@ -103,6 +107,9 @@ export const deleteRecipeFromFavorites = async (userId, recipeId) => {
     { $pull: { favoriteRecipes: recipeId } },
     { new: true },
   );
+  if (!recipe) {
+    throw createHttpError(404, 'Recipe not found');
+  }
   return recipe;
 };
 
