@@ -16,6 +16,10 @@ export const getFavoriteRecipes = async ({ page, perPage, sortBy, sortOrder, id 
       sort: { [sortBy]: sortOrder },
       skip,
       limit: perPage,
+    },
+    populate: {
+      path: "ingredients.id",
+      model: "ingredient"
     }
   });
   const paginationData = calculatePaginationData(recipesCount, perPage, page);
@@ -33,7 +37,7 @@ export const getMyRecipes = async ({ page, perPage, sortBy, sortOrder, id }) => 
 
   const recipesCount = await RecipesCollection.countDocuments({ owner: id });
 
-  const paginationRecipes = await RecipesCollection.find({ owner: id }).skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).exec();
+  const paginationRecipes = await RecipesCollection.find({ owner: id }).skip(skip).limit(perPage).sort({ [sortBy]: sortOrder }).populate("ingredients.id").exec();
 
   const paginationData = calculatePaginationData(recipesCount, perPage, page);
 
