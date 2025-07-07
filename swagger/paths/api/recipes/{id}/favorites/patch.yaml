@@ -2,7 +2,7 @@ tags:
   - Recipes
 summary: Add a recipe to user's favorites
 operationId: addFavoriteRecipe
-description: "Add a recipe to user's favorites"
+description: Add a recipe to user's favorites
 security:
   - bearerAuth: []
 parameters:
@@ -14,15 +14,11 @@ parameters:
       example: "6462a8f74c3d0ddd28897fbf"
 responses:
   "200":
-    description: "Recipe successfully added to favorites"
+    description: Recipe successfully added to favorites
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            message:
-              type: string
-              example: Recipe added to favorites
+          $ref: "../../../../../components/schemas/recipeWithFavorite.yaml"
   "404":
     $ref: "../../../../../components/responses/404.yaml"
   "401":

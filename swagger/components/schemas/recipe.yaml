@@ -32,6 +32,7 @@ properties:
         id:
           type: string
           example: "6462a8f74c3d0ddd28897fbf"
+          description: MongoDB ObjectId
         measure:
           type: string
           example: "200g"
@@ -41,6 +42,9 @@ properties:
   cookingTime:
     type: string
     example: "30"
+  calories:
+    type: string
+    example: "300"
   owner:
     type: string
     example: "5f8f8c44c9e77a001a1b2c3d"

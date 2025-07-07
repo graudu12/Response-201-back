@@ -18,11 +18,15 @@
   "tags": [
     {
       "name": "Recipes",
-      "description": "Operations about users."
+      "description": "Operations to manage recipes."
     },
     {
       "name": "Auth",
       "description": "Auth operations."
+    },
+    {
+      "name": "Sessions",
+      "description": "Operations related to user sessions (refresh)."
     },
     {
       "name": "User",
@@ -56,6 +60,10 @@
                   "type": "array",
                   "items": {
                     "type": "object",
+                    "required": [
+                      "_id",
+                      "name"
+                    ],
                     "properties": {
                       "_id": {
                         "type": "string",
@@ -242,20 +250,24 @@
                 "properties": {
                   "nameRecipe": {
                     "type": "string",
-                    "example": "Greek Salad"
+                    "example": "Greek Salad",
+                    "description": "The name of the recipe"
                   },
                   "dishPhoto": {
                     "type": "string",
                     "format": "uri",
-                    "example": "https://example.com/photos/salad.jpg"
+                    "example": "https://example.com/photos/salad.jpg",
+                    "description": "URL of the dish photo (optional)"
                   },
                   "recipeDescription": {
                     "type": "string",
-                    "example": "Fresh and tasty salad"
+                    "example": "Fresh and tasty salad",
+                    "description": "Short description of the recipe"
                   },
                   "instructions": {
                     "type": "string",
-                    "example": "Chop vegetables, mix and serve."
+                    "example": "Chop vegetables, mix and serve.",
+                    "description": "Step-by-step instructions"
                   },
                   "ingredients": {
                     "type": "array",
@@ -268,26 +280,31 @@
                       "properties": {
                         "id": {
                           "type": "string",
-                          "example": "64e2abc9f6a0123456789012"
+                          "example": "64e2abc9f6a0123456789012",
+                          "description": "Ingredient ID"
                         },
                         "measure": {
                           "type": "string",
-                          "example": "100g"
+                          "example": "100g",
+                          "description": "Amount or measure of the ingredient"
                         }
                       }
                     }
                   },
                   "recipeCategory": {
                     "type": "string",
-                    "example": "Salads"
+                    "example": "Salads",
+                    "description": "Category of the recipe"
                   },
                   "calories": {
-                    "type": "number",
-                    "example": 250
+                    "type": "string",
+                    "example": "250",
+                    "description": "Number of calories in the dish"
                   },
                   "cookingTime": {
                     "type": "string",
-                    "example": "15 min"
+                    "example": "15 min",
+                    "description": "Estimated cooking time"
                   }
                 }
               }
@@ -659,11 +676,11 @@
                         "favoriteRecipes": {
                           "type": "array",
                           "items": {
-                            "type": "string",
-                            "example": [
-                              "6462a8f74c3d0ddd28897fb8"
-                            ]
-                          }
+                            "type": "string"
+                          },
+                          "example": [
+                            "6462a8f74c3d0ddd28897fb8"
+                          ]
                         }
                       }
                     }
@@ -682,6 +699,59 @@
       }
     },
     "/api/recipes/{recipeId}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipe by id",
+        "operationId": "getRecipeById",
+        "description": "Returns recipes by id.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get recipe by recipeId!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found recipe with id 123!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/api/recipes/{recipeId}/ownRecipe": {
       "delete": {
         "tags": [
           "Recipes"
@@ -726,10 +796,6 @@
                         "message": {
                           "type": "string",
                           "example": "Recipe deleted successfully and removed from all favorites"
-                        },
-                        "recipeId": {
-                          "type": "string",
-                          "example": "6462a8f74c3d0ddd28897fb8"
                         }
                       }
                     }
@@ -743,54 +809,6 @@
           },
           "403": {
             "$ref": "#/components/responses/403"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Get recipe by id",
-        "operationId": "getRecipeById",
-        "description": "Returns recipes by id.",
-        "security": [],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "recipeId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get recipe by recipeId!",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found recipe with id 123!"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/recipe"
-                    }
-                  }
-                }
-              }
-            }
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -856,7 +874,7 @@
         "security": [],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -977,7 +995,7 @@
         "security": [],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -1031,6 +1049,9 @@
                     "message": {
                       "type": "string",
                       "example": "Successfully registered a user!"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/user"
                     }
                   }
                 }
@@ -1061,6 +1082,30 @@
               }
             }
           },
+          "409": {
+            "description": "Email already in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Email in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "$ref": "#/components/responses/500"
           }
@@ -1082,23 +1127,7 @@
         ],
         "responses": {
           "204": {
-            "description": "Logs out a user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 204
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Logs out a user"
           },
           "400": {
             "description": "Bad request",
@@ -1133,7 +1162,89 @@
         }
       }
     },
-    "/api/users/current": {
+    "/api/auth/refresh": {
+      "post": {
+        "tags": [
+          "Sessions"
+        ],
+        "summary": "Refresh user session",
+        "operationId": "refreshUserSession",
+        "description": "Refreshes the user's session.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "cookie",
+            "name": "sessionId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Session ID cookie"
+          },
+          {
+            "in": "cookie",
+            "name": "refreshToken",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Refresh token cookie"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully refreshed a session",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully refreshed a session!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - session not found or expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Session token expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/current": {
       "get": {
         "tags": [
           "Users"
@@ -1335,7 +1446,8 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "example": "6462a8f74c3d0ddd28897fbf"
+                  "example": "6462a8f74c3d0ddd28897fbf",
+                  "description": "MongoDB ObjectId"
                 },
                 "measure": {
                   "type": "string",
@@ -1351,6 +1463,10 @@
           "cookingTime": {
             "type": "string",
             "example": "30"
+          },
+          "calories": {
+            "type": "string",
+            "example": "300"
           },
           "owner": {
             "type": "string",

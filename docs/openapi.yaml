@@ -8,9 +8,11 @@ info:
   description: This is the documentation for the Recipes app.
 tags:
   - name: Recipes
-    description: Operations about users.
+    description: Operations to manage recipes.
   - name: Auth
     description: Auth operations.
+  - name: Sessions
+    description: Operations related to user sessions (refresh).
   - name: User
     description: User data.
   - name: Ingredients
@@ -46,10 +48,12 @@ paths:
       $ref: ../swagger/paths/api/recipes/{id}/favorites/delete.yaml
 
   /api/recipes/{recipeId}:
-    delete:
-      $ref: ../swagger/paths/api/recipes/myRecipes/delete.yaml
     get:
       $ref: ../swagger/paths/api/recipes/{id}/favorites/get.yaml
+
+  /api/recipes/{recipeId}/ownRecipe:
+    delete:
+      $ref: ../swagger/paths/api/recipes/myRecipes/delete.yaml
 
   /api/ingredients:
     get:
@@ -66,7 +70,11 @@ paths:
   /api/auth/logout:
     post:
       $ref: ../swagger/paths/api/auth/logout/post.yaml
-  /api/users/current:
+
+  /api/auth/refresh:
+    post:
+      $ref: ../swagger/paths/api/auth/refresh/post.yaml
+  /api/user/current:
     get:
       $ref: ../swagger/paths/api/users/get.yaml
 

@@ -13,6 +13,9 @@ responses:
           type: array
           items:
             type: object
+            required:
+              - _id
+              - name
             properties:
               _id:
                 type: string
