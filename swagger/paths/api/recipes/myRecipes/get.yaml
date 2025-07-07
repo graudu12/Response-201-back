@@ -32,7 +32,7 @@ responses:
                 recipes:
                   type: array
                   items:
-                    $ref: ../../../../components/schemas/recipe.yaml
+                    $ref: ../../../../components/schemas/recipeFull.yaml
                 pagination:
                   type: object
                   properties:

@@ -69,7 +69,7 @@ responses:
   "201":
     description: Recipe successfully created
     content:
-      application/json:
+      multipart/form-data:
         schema:
           type: object
           properties:

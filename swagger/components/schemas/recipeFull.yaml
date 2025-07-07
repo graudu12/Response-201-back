@@ -1,0 +1,71 @@
+type: object
+required:
+  - nameRecipe
+  - instructions
+  - ingredients
+  - recipeCategory
+  - cookingTime
+  - recipeDescription
+  - owner
+properties:
+  nameRecipe:
+    type: string
+    example: "Cabbage Soup"
+  dishPhoto:
+    type: string
+    format: url
+    example: "http://example.com/photo.jpg"
+  recipeDescription:
+    type: string
+    example: "A classic British cake made with almond sponge cake..."
+  instructions:
+    type: string
+    example: "Preheat oven to 350° F. Spray a 9x13-inch baking pan..."
+  ingredients:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - measure
+      properties:
+        id:
+          type: object
+          required:
+            - _id
+            - name
+            - desc
+            - img
+          properties:
+            _id:
+              type: string
+              example: "6462a8f74c3d0ddd28897fbf"
+              description: MongoDB ObjectId
+            name:
+              type: string
+              example: "Baby Plum Tomatoes"
+              description: Name of ingredient
+            desc:
+              type: string
+              example: "The tomato is the edible, often red, berry..."
+              description: Description of ingredient
+            img:
+              type: string
+              format: url
+              example: "http:// example.com"
+              description: Image of ingredient
+        measure:
+          type: string
+          example: "200g"
+  recipeCategory:
+    type: string
+    example: "Lamb"
+  cookingTime:
+    type: string
+    example: "30"
+  calories:
+    type: string
+    example: "300"
+  owner:
+    type: string
+    example: "5f8f8c44c9e77a001a1b2c3d"
