@@ -64,7 +64,7 @@ responses:
                 enrichedRecipes:
                   type: array
                   items:
-                    $ref: ../../../components/schemas/recipeWithFavorite.yaml
+                    $ref: ../../../components/schemas/recipe.yaml
                 totalPages:
                   type: integer
                   example: 5
