@@ -1,23 +1,23 @@
 const parseSortBy = (value) => {
     if (typeof value === "undefined") {
-        return "_id";
+        return "createdAt";
     };
 
     const keys = ["_id", "name", "createdAt"];
 
     if (keys.includes(value) !== true) {
-        return "_id";
+        return "createdAt";
     }
     return value;
 };
 
 const parseSortOrder = (value) => {
     if (typeof value === "undefined") {
-        return "asc";
+        return "desc";
     };
 
     if (value !== "asc" && value !== "desc") {
-        return "asc";
+        return "desc";
     }
     return value;
 };

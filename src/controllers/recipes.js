@@ -12,6 +12,10 @@ import { UserCollection } from '../db/models/user.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
+import { getEnvVar } from "../utils/getEnvVar.js";
+import { saveFileToCloudinary } from "../utils/saveFileToCloudinary.js";
+import { saveFileToUploadDir } from "../utils/saveFileToUploadDir.js";
+
 
 export const getFavoriteRecipesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -88,7 +92,18 @@ export const getAllRecipesController = async (req, res) => {
 
 export const createRecipesController = async (req, res) => {
   const { id } = req.user;
-  const recipeData = { ...req.body, owner: id };
+  const photo = req.file;
+
+  let urlPhoto;
+  if (photo) {
+    if (getEnvVar("ENABLE_CLOUDINARY") === "true") {
+      urlPhoto = await saveFileToCloudinary(photo);
+    } else {
+      urlPhoto = await saveFileToUploadDir(photo);
+    };
+  };
+
+  const recipeData = { ...req.body, dishPhoto: urlPhoto, owner: id };
   const recipe = await createRecipes(recipeData);
 
   res.status(201).json({

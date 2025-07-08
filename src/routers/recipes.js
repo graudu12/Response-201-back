@@ -12,11 +12,13 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { auth } from '../middlewares/authenticate.js';
+import { upload } from "../middlewares/upload.js";
+
 const router = Router();
 
 router.get('/', ctrlWrapper(getAllRecipesController));
 
-router.post('/', auth, ctrlWrapper(createRecipesController));
+router.post('/', upload.single("isPhoto"), auth, ctrlWrapper(createRecipesController));
 
 router.get('/myRecipes', auth, ctrlWrapper(getMyRecipesController));
 
