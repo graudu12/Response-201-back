@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { getEnvVar } from "../../utils/getEnvVar.js";
 
 const categorySchema = new Schema({
   _id: {
@@ -19,6 +20,7 @@ const recipeSchema = new Schema(
     },
     dishPhoto: {
       type: String,
+      default: `${getEnvVar("APP_DOMAIN")}/uploads/no-photo.png`
     },
     recipeDescription: {
       type: String,
