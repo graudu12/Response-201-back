@@ -6,7 +6,6 @@ required:
   - recipeCategory
   - cookingTime
   - recipeDescription
-  - owner
 properties:
   nameRecipe:
     type: string
