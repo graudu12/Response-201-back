@@ -10,7 +10,7 @@ properties:
   nameRecipe:
     type: string
     example: "Cabbage Soup"
-  dishPhoto:
+  isPhoto:
     type: string
     format: url
     example: "http://example.com/photo.jpg"

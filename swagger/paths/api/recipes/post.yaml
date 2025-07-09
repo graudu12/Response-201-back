@@ -24,7 +24,7 @@ requestBody:
             type: string
             example: Greek Salad
             description: The name of the recipe
-          dishPhoto:
+          isPhoto:
             type: string
             format: binary
             description: Upload image file of the dish

@@ -253,7 +253,7 @@
                     "example": "Greek Salad",
                     "description": "The name of the recipe"
                   },
-                  "dishPhoto": {
+                  "isPhoto": {
                     "type": "string",
                     "format": "binary",
                     "description": "Upload image file of the dish"
@@ -1414,7 +1414,7 @@
             "type": "string",
             "example": "Cabbage Soup"
           },
-          "dishPhoto": {
+          "isPhoto": {
             "type": "string",
             "format": "url",
             "example": "http://example.com/photo.jpg"
@@ -1474,15 +1474,14 @@
           "ingredients",
           "recipeCategory",
           "cookingTime",
-          "recipeDescription",
-          "owner"
+          "recipeDescription"
         ],
         "properties": {
           "nameRecipe": {
             "type": "string",
             "example": "Cabbage Soup"
           },
-          "dishPhoto": {
+          "isPhoto": {
             "type": "string",
             "format": "url",
             "example": "http://example.com/photo.jpg"
